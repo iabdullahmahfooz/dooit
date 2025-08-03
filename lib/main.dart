@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'views/get_started_screen/get_started_screen.dart';
+import 'views/login_screen/login_screen.dart';
 
 void main() {
   runApp(const DooitApp());
@@ -27,7 +28,10 @@ class DooitApp extends StatelessWidget {
         textTheme: const TextTheme(bodyMedium: TextStyle(fontSize: 16)),
       ),
       initialRoute: '/',
-      routes: {'/': (_) => const GetStartedScreen()},
+      routes: {
+        '/': (context) => const GetStartedScreen(),
+        '/login_screen': (context) => const LoginScreen(),
+      },
     );
   }
 }

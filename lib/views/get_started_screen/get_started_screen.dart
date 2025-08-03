@@ -8,7 +8,7 @@ class GetStartedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: simpleAppBar('Get Started'),
+      appBar: simpleAppBar('App bar'),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
@@ -37,7 +37,7 @@ class GetStartedScreen extends StatelessWidget {
               children: [
                 CustomButton(
                   label: 'Login',
-                  onTap: () => Navigator.pushNamed(context, '/login'),
+                  onTap: () => Navigator.pushNamed(context, '/login_screen'),
                 ),
                 SizedBox(height: 16),
                 CustomButton(
