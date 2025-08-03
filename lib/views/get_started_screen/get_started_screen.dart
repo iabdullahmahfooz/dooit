@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
-import '../../widgets/app_bar.dart';
 
 class GetStartedScreen extends StatelessWidget {
   const GetStartedScreen({super.key});
@@ -8,7 +7,6 @@ class GetStartedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: simpleAppBar('App bar'),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
