@@ -55,9 +55,9 @@ flutter:
 
   assets:
     - lib/assets/illustrations/get_started.jpg
-    - lib/assets/icons/facebook.png
-    - lib/assets/icons/apple.png
-    - lib/assets/icons/google.png
+    - lib/assets/icons/facebook_icon.png
+    - lib/assets/icons/apple_icon.png
+    - lib/assets/icons/google_icon.png
 
 
 

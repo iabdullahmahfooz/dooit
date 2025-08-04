@@ -14,8 +14,8 @@ class LoginScreen extends StatelessWidget {
           children: [
             const Text(
               'Login to your account',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.left,
             ),
             const SizedBox(height: 42),
 
@@ -74,11 +74,11 @@ class LoginScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('lib/assets/icons/facebook.png', height: 42),
+                Image.asset('lib/assets/icons/facebook_icon.png', height: 42),
                 const SizedBox(width: 34),
-                Image.asset('lib/assets/icons/apple.png', height: 42),
+                Image.asset('lib/assets/icons/apple_icon.png', height: 42),
                 const SizedBox(width: 34),
-                Image.asset('lib/assets/icons/google.png', height: 42),
+                Image.asset('lib/assets/icons/google_icon.png', height: 42),
               ],
             ),
 
@@ -90,7 +90,8 @@ class LoginScreen extends StatelessWidget {
               children: [
                 const Text("Don't have an account?"),
                 TextButton(
-                  onPressed: () => Navigator.pushNamed(context, '/signup'),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, '/signup_screen'),
                   child: const Text(
                     'Sign up',
                     style: TextStyle(color: Colors.orange),

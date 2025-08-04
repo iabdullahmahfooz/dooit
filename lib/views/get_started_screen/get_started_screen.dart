@@ -40,7 +40,7 @@ class GetStartedScreen extends StatelessWidget {
                 SizedBox(height: 16),
                 CustomButton(
                   label: 'Signup',
-                  onTap: () => Navigator.pushNamed(context, '/signup'),
+                  onTap: () => Navigator.pushNamed(context, '/signup_screen'),
                 ),
               ],
             ),
