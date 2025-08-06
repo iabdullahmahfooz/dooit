@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
+import '../../widgets/email_input_field.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
@@ -17,7 +18,7 @@ class SignupScreen extends StatelessWidget {
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             ),
-            const SizedBox(height: 42),
+            const SizedBox(height: 40),
 
             // Full Name Field
             const Text('Full Name'),
@@ -33,19 +34,10 @@ class SignupScreen extends StatelessWidget {
             ),
             const SizedBox(height: 30),
 
-            // Email Field
-            const Text('Email'),
-            const SizedBox(height: 8),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'eg abdullah@gmail.com',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-              ),
-            ),
-            const SizedBox(height: 30),
+            // Email Field Reuseable Widget
+            const EmailInputField(),
+
+            const SizedBox(height: 40),
 
             // Password Field
             const Text('Password'),

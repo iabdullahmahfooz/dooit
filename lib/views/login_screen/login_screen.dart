@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
+import '../../widgets/email_input_field.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -17,21 +18,12 @@ class LoginScreen extends StatelessWidget {
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             ),
-            const SizedBox(height: 42),
+            const SizedBox(height: 40),
 
-            // Email Field
-            const Text('Email'),
-            const SizedBox(height: 8),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'eg abdullah@gmail.com',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-              ),
-            ),
-            const SizedBox(height: 20),
+            // Email Field Reusable widget
+            const EmailInputField(),
+
+            const SizedBox(height: 40),
 
             // Password Field
             const Text('Password'),
@@ -63,7 +55,7 @@ class LoginScreen extends StatelessWidget {
             // Login Button
             CustomButton(label: 'Login', onTap: () {}),
 
-            const SizedBox(height: 150),
+            const SizedBox(height: 120),
 
             // Social login text
             const Center(child: Text('OR LOGIN WITH:')),
