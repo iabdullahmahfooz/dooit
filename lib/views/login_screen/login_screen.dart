@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/email_input_field.dart';
+import '../../widgets/password_input_field.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -25,21 +26,11 @@ class LoginScreen extends StatelessWidget {
 
             const SizedBox(height: 40),
 
-            // Password Field
-            const Text('Password'),
-            const SizedBox(height: 8),
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                hintText: '*************',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-              ),
-            ),
+            // Password Field Reusable Widget
+            const PasswordInputField(),
 
             const SizedBox(height: 10),
+
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
