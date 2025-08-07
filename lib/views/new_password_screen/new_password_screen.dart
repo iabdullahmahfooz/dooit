@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import '../../widgets/email_input_field.dart';
 import '../../widgets/custom_button.dart';
+import '../../widgets/password_input_field.dart';
 
-class ForgetPasswordScreen extends StatelessWidget {
-  const ForgetPasswordScreen({super.key});
+class CreateNewPasswordScreen extends StatelessWidget {
+  const CreateNewPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          // Back Arrow
           Padding(
-            padding: const EdgeInsets.only(top: 60, left: 8),
+            padding: const EdgeInsets.only(top: 60, left: 0),
             child: Align(
               alignment: Alignment.centerLeft,
               child: IconButton(
-                color: Colors.black,
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () => Navigator.pop(context),
               ),
@@ -33,29 +31,38 @@ class ForgetPasswordScreen extends StatelessWidget {
                   const SizedBox(height: 10),
 
                   const Text(
-                    'Reset your password',
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
+                    'Create New Password',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 12),
+
                   const Text(
-                    'Enter your email address to receive password reset instructions.',
+                    'Your new password must be different from previously used passwords.',
                     style: TextStyle(fontSize: 14, color: Colors.black54),
-                    textAlign: TextAlign.left,
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 42),
+                  const PasswordInputField(),
+                  const Text('New Password'),
+                  const SizedBox(height: 8),
 
-                  //Email field
-                  const EmailInputField(),
+                  const SizedBox(height: 20),
+
+                  const Text('Confirm Password'),
+                  const PasswordInputField(),
+                  const SizedBox(height: 8),
 
                   const Spacer(),
 
                   CustomButton(
-                    label: 'Next',
-                    onTap: () =>
-                        Navigator.pushNamed(context, '/new_password_screen'),
+                    label: 'Save Password',
+                    onTap: () {
+                      // Navigate to success screen or login
+                      Navigator.pushNamed(context, '/login');
+                    },
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 28),
                 ],
               ),
             ),

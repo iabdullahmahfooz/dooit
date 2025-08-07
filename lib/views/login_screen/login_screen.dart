@@ -28,7 +28,6 @@ class LoginScreen extends StatelessWidget {
 
             // Password Field Reusable Widget
             const PasswordInputField(),
-
             const SizedBox(height: 10),
 
             Align(

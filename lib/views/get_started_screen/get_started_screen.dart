@@ -22,12 +22,12 @@ class GetStartedScreen extends StatelessWidget {
               'create task . set reminder . track progress',
               style: TextStyle(fontSize: 16, color: Colors.grey[700]),
             ),
-            SizedBox(height: 40),
+            SizedBox(height: 20),
             Expanded(
               child: Center(
                 child: Image.asset(
                   'lib/assets/illustrations/get_started.jpg', // Replace with your own image path
-                  height: 250,
+                  height: 350,
                 ),
               ),
             ),

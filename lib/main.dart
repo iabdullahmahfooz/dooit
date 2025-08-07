@@ -3,6 +3,7 @@ import 'views/get_started_screen/get_started_screen.dart';
 import 'views/login_screen/login_screen.dart';
 import 'views/signup_screen/signup_screen.dart';
 import 'views/forget_password_screen/forget_password_screen.dart';
+import 'views/new_password_screen/new_password_screen.dart';
 
 void main() {
   runApp(const DooitApp());
@@ -15,18 +16,9 @@ class DooitApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Dooit',
       theme: ThemeData(
-        primaryColor: const Color(0xFFFFA726), // Light Orange
+        primaryColor: const Color(0xFFFFA726),
         scaffoldBackgroundColor: Colors.white,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFFFA726),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-        ),
         textTheme: const TextTheme(bodyMedium: TextStyle(fontSize: 16)),
       ),
       initialRoute: '/',
@@ -35,6 +27,7 @@ class DooitApp extends StatelessWidget {
         '/login_screen': (context) => const LoginScreen(),
         '/signup_screen': (context) => const SignupScreen(),
         '/forget_password_screen': (context) => const ForgetPasswordScreen(),
+        '/new_password_screen': (context) => const CreateNewPasswordScreen(),
       },
     );
   }
