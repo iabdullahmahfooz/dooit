@@ -1,3 +1,5 @@
+import 'package:dooit/routes/routes.dart';
+import 'package:dooit/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'views/get_started_screen/get_started_screen.dart';
 import 'views/login_screen/login_screen.dart';
@@ -17,14 +19,14 @@ class DooitApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: const Color(0xFFFFA726),
-        scaffoldBackgroundColor: Colors.white,
+        primaryColor: AppColors.primaryColor,
+        scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
         textTheme: const TextTheme(bodyMedium: TextStyle(fontSize: 16)),
       ),
       initialRoute: '/',
       routes: {
         '/': (context) => const GetStartedScreen(),
-        '/login_screen': (context) => const LoginScreen(),
+        AppRoutes.loginScreen: (context) => const LoginScreen(),
         '/signup_screen': (context) => const SignupScreen(),
         '/forget_password_screen': (context) => const ForgetPasswordScreen(),
         '/new_password_screen': (context) => const CreateNewPasswordScreen(),

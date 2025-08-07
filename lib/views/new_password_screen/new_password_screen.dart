@@ -58,8 +58,7 @@ class CreateNewPasswordScreen extends StatelessWidget {
                   CustomButton(
                     label: 'Save Password',
                     onTap: () {
-                      // Navigate to success screen or login
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.pushNamed(context, '/login_screen');
                     },
                   ),
                   const SizedBox(height: 28),

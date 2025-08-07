@@ -1,3 +1,5 @@
+import 'package:dooit/theme/units.dart';
+import 'package:dooit/utils/static_assets.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/email_input_field.dart';
@@ -10,7 +12,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 80),
+        padding: AppUnits.a4,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -57,11 +59,11 @@ class LoginScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('lib/assets/icons/facebook_icon.png', height: 42),
+                Image.asset(StaticAssets.fbIcon, height: 42),
                 const SizedBox(width: 34),
-                Image.asset('lib/assets/icons/apple_icon.png', height: 42),
+                Image.asset(StaticAssets.appleIcon, height: 42),
                 const SizedBox(width: 34),
-                Image.asset('lib/assets/icons/google_icon.png', height: 42),
+                Image.asset(StaticAssets.googleIcon, height: 42),
               ],
             ),
 

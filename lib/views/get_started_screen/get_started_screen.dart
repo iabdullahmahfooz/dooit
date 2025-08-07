@@ -1,3 +1,4 @@
+import 'package:dooit/routes/routes.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
 
@@ -35,7 +36,7 @@ class GetStartedScreen extends StatelessWidget {
               children: [
                 CustomButton(
                   label: 'Login',
-                  onTap: () => Navigator.pushNamed(context, '/login_screen'),
+                  onTap: () => Navigator.pushNamed(context, AppRoutes.loginScreen),
                 ),
                 SizedBox(height: 16),
                 CustomButton(
