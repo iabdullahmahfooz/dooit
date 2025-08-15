@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:dooit/theme/colors.dart';
+import 'package:dooit/theme/units.dart';
 import '../../widgets/email_input_field.dart';
 import '../../widgets/custom_button.dart';
 
@@ -7,60 +9,70 @@ class ForgetPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          // Back Arrow
-          Padding(
-            padding: const EdgeInsets.only(top: 60, left: 8),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: IconButton(
-                color: Colors.black,
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () => Navigator.pop(context),
-              ),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(), // ✅ Dismiss keyboard
+      child: Scaffold(
+        backgroundColor: AppColors.scaffoldBackgroundColor,
+        resizeToAvoidBottomInset: true,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: AppUnits.a20,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Back Arrow
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: IconButton(
+                    color: AppColors.textColor,
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
+                AppUnits.y12,
+
+                // Title
+                const Text(
+                  'Reset your password',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textColor,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+                AppUnits.y12,
+
+                // Subtitle
+                const Text(
+                  'Enter your email address to receive password reset instructions.',
+                  style: TextStyle(fontSize: 14, color: Colors.black54),
+                  textAlign: TextAlign.left,
+                ),
+                AppUnits.y40,
+
+                // Email field
+                const EmailInputField(),
+                AppUnits.y40,
+              ],
             ),
           ),
+        ),
 
-          // Main content
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(height: 10),
-
-                  const Text(
-                    'Reset your password',
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.left,
-                  ),
-                  const SizedBox(height: 12),
-                  const Text(
-                    'Enter your email address to receive password reset instructions.',
-                    style: TextStyle(fontSize: 14, color: Colors.black54),
-                    textAlign: TextAlign.left,
-                  ),
-                  const SizedBox(height: 42),
-
-                  //Email field
-                  const EmailInputField(),
-
-                  const Spacer(),
-
-                  CustomButton(
-                    label: 'Next',
-                    onTap: () =>
-                        Navigator.pushNamed(context, '/new_password_screen'),
-                  ),
-                  const SizedBox(height: 40),
-                ],
-              ),
-            ),
+        // ✅ Button fixed at bottom
+        bottomNavigationBar: Padding(
+          padding: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            bottom:
+                MediaQuery.of(context).viewInsets.bottom +
+                20, // stays above keyboard
           ),
-        ],
+          child: CustomButton(
+            label: 'Next',
+            onTap: () => Navigator.pushNamed(context, '/new_password_screen'),
+          ),
+        ),
       ),
     );
   }

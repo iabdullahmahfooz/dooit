@@ -10,81 +10,96 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: AppUnits.a4,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text(
-              'Login to your account',
-              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left,
-            ),
-            const SizedBox(height: 40),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(), // Hide keyboard on tap
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: AppUnits.px24,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AppUnits.y40, // large top space
 
-            // Email Field Reusable widget
-            const EmailInputField(),
-
-            const SizedBox(height: 40),
-
-            // Password Field Reusable Widget
-            const PasswordInputField(),
-            const SizedBox(height: 10),
-
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                onPressed: () =>
-                    Navigator.pushNamed(context, '/forget_password_screen'),
-                child: const Text(
-                  'Forgot password?',
-                  style: TextStyle(color: Colors.orange),
+                const Text(
+                  'Login to your account',
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.left,
                 ),
-              ),
-            ),
 
-            const SizedBox(height: 10),
-            // Login Button
-            CustomButton(label: 'Login', onTap: () {}),
+                AppUnits.y40,
 
-            const SizedBox(height: 120),
+                // Email Field
+                const EmailInputField(),
 
-            // Social login text
-            const Center(child: Text('OR LOGIN WITH:')),
+                AppUnits.y40,
 
-            const SizedBox(height: 30),
+                // Password Field
+                const Text('Password'),
+                AppUnits.y8,
+                const PasswordInputField(),
 
-            // Social Icons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(StaticAssets.fbIcon, height: 42),
-                const SizedBox(width: 34),
-                Image.asset(StaticAssets.appleIcon, height: 42),
-                const SizedBox(width: 34),
-                Image.asset(StaticAssets.googleIcon, height: 42),
-              ],
-            ),
+                AppUnits.y12,
 
-            const Spacer(),
-
-            // Bottom Signup Text
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Don't have an account?"),
-                TextButton(
-                  onPressed: () =>
-                      Navigator.pushNamed(context, '/signup_screen'),
-                  child: const Text(
-                    'Sign up',
-                    style: TextStyle(color: Colors.orange),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () =>
+                        Navigator.pushNamed(context, '/forget_password_screen'),
+                    child: const Text(
+                      'Forgot password?',
+                      style: TextStyle(color: Colors.orange),
+                    ),
                   ),
                 ),
+
+                AppUnits.y12,
+
+                // Login Button
+                CustomButton(label: 'Login', onTap: () {}),
+
+                AppUnits.y64,
+
+                // Social login text
+                const Center(child: Text('OR LOGIN WITH:')),
+
+                AppUnits.y24,
+
+                // Social Icons
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(StaticAssets.fbIcon, height: 42),
+                    AppUnits.x32,
+                    Image.asset(StaticAssets.appleIcon, height: 42),
+                    AppUnits.x32,
+                    Image.asset(StaticAssets.googleIcon, height: 42),
+                  ],
+                ),
+
+                AppUnits.y40,
+
+                // Bottom Signup Text
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Don't have an account?"),
+                    TextButton(
+                      onPressed: () =>
+                          Navigator.pushNamed(context, '/signup_screen'),
+                      child: const Text(
+                        'Sign up',
+                        style: TextStyle(color: Colors.orange),
+                      ),
+                    ),
+                  ],
+                ),
+
+                AppUnits.y24,
               ],
             ),
-          ],
+          ),
         ),
       ),
     );

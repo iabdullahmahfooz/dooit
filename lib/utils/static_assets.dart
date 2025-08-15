@@ -1,7 +1,5 @@
 abstract class StaticAssets {
-  static const fbIcon = 'lib/assets/icons/facebook_icon.png'; 
-  static const googleIcon = 'lib/assets/icons/google_icon.png'; 
-  static const appleIcon = 'lib/assets/icons/apple_icon.png'; 
-
-  
+  static const fbIcon = 'assets/icons/facebook.png';
+  static const googleIcon = 'assets/icons/google.png';
+  static const appleIcon = 'assets/icons/apple.png';
 }

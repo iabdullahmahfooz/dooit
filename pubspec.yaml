@@ -54,10 +54,10 @@ flutter:
   uses-material-design: true
 
   assets:
-    - lib/assets/illustrations/get_started.jpg
-    - lib/assets/icons/facebook_icon.png
-    - lib/assets/icons/apple_icon.png
-    - lib/assets/icons/google_icon.png
+    - assets/illustrations/get_started.jpg
+    - assets/icons/facebook.png
+    - assets/icons/apple.png
+    - assets/icons/google.png
 
 
 

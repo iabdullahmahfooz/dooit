@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:dooit/theme/colors.dart';
+import 'package:dooit/theme/units.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/password_input_field.dart';
 
@@ -7,66 +9,93 @@ class CreateNewPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 60, left: 0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () => Navigator.pop(context),
-              ),
+    return GestureDetector(
+      onTap: () =>
+          FocusScope.of(context).unfocus(), // ✅ Hide keyboard on tap outside
+      child: Scaffold(
+        backgroundColor: AppColors.scaffoldBackgroundColor,
+        resizeToAvoidBottomInset: true,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: AppUnits.a20,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Back Arrow
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                    color: AppColors.textColor,
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
+                AppUnits.y12,
+
+                // Title
+                const Text(
+                  'Create New Password',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textColor,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+                AppUnits.y12,
+
+                // Subtitle
+                const Text(
+                  'Your new password must be different from previously used passwords.',
+                  style: TextStyle(fontSize: 14, color: Colors.black54),
+                  textAlign: TextAlign.left,
+                ),
+                AppUnits.y40,
+
+                // New Password
+                const Text(
+                  'New Password',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.textColor,
+                  ),
+                ),
+                AppUnits.y8,
+                const PasswordInputField(),
+                AppUnits.y40,
+
+                // Confirm Password
+                const Text(
+                  'Confirm Password',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.textColor,
+                  ),
+                ),
+                AppUnits.y8,
+                const PasswordInputField(),
+                AppUnits.y20,
+              ],
             ),
           ),
+        ),
 
-          // Main content
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(height: 10),
-
-                  const Text(
-                    'Create New Password',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 12),
-
-                  const Text(
-                    'Your new password must be different from previously used passwords.',
-                    style: TextStyle(fontSize: 14, color: Colors.black54),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 42),
-                  const PasswordInputField(),
-                  const Text('New Password'),
-                  const SizedBox(height: 8),
-
-                  const SizedBox(height: 20),
-
-                  const Text('Confirm Password'),
-                  const PasswordInputField(),
-                  const SizedBox(height: 8),
-
-                  const Spacer(),
-
-                  CustomButton(
-                    label: 'Save Password',
-                    onTap: () {
-                      Navigator.pushNamed(context, '/login_screen');
-                    },
-                  ),
-                  const SizedBox(height: 28),
-                ],
-              ),
-            ),
+        // ✅ Button fixed at bottom
+        bottomNavigationBar: Padding(
+          padding: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 20,
           ),
-        ],
+          child: CustomButton(
+            label: 'Save Password',
+            onTap: () {
+              Navigator.pushNamed(context, '/login_screen');
+            },
+          ),
+        ),
       ),
     );
   }
