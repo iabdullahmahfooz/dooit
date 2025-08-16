@@ -1,3 +1,6 @@
+import 'package:dooit/routes/routes.dart';
+import 'package:dooit/theme/colors.dart';
+import 'package:dooit/theme/typography.dart';
 import 'package:dooit/theme/units.dart';
 import 'package:dooit/utils/static_assets.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +14,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(), // Hide keyboard on tap
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         body: SafeArea(
@@ -20,53 +23,47 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                AppUnits.y40, // large top space
-
-                const Text(
-                  'Login to your account',
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                ),
-
                 AppUnits.y40,
 
-                // Email Field
+                Text('Login to your account', style: AppText.h1),
+                AppUnits.y40,
+
                 const EmailInputField(),
+                AppUnits.y20,
 
-                AppUnits.y40,
-
-                // Password Field
-                const Text('Password'),
+                Text('Password', style: AppText.b2),
                 AppUnits.y8,
                 const PasswordInputField(),
-
                 AppUnits.y12,
 
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, '/forget_password_screen'),
-                    child: const Text(
+                    onPressed: () => Navigator.pushNamed(
+                      context,
+                      AppRoutes.forgetPasswordScreen,
+                    ),
+                    child: Text(
                       'Forgot password?',
-                      style: TextStyle(color: Colors.orange),
+                      style: AppText.b2.copyWith(color: AppColors.primaryColor),
                     ),
                   ),
                 ),
 
-                AppUnits.y12,
+                AppUnits.y20,
 
-                // Login Button
                 CustomButton(label: 'Login', onTap: () {}),
 
-                AppUnits.y64,
+                AppUnits.y48,
 
-                // Social login text
-                const Center(child: Text('OR LOGIN WITH:')),
-
+                Center(
+                  child: Text(
+                    'OR LOGIN WITH:',
+                    style: AppText.b2.copyWith(color: Colors.grey[600]),
+                  ),
+                ),
                 AppUnits.y24,
 
-                // Social Icons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -77,26 +74,27 @@ class LoginScreen extends StatelessWidget {
                     Image.asset(StaticAssets.googleIcon, height: 42),
                   ],
                 ),
-
                 AppUnits.y40,
 
-                // Bottom Signup Text
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Don't have an account?"),
+                    Text("Don't have an account?", style: AppText.b2),
                     TextButton(
                       onPressed: () =>
-                          Navigator.pushNamed(context, '/signup_screen'),
-                      child: const Text(
+                          Navigator.pushNamed(context, AppRoutes.signupScreen),
+                      child: Text(
                         'Sign up',
-                        style: TextStyle(color: Colors.orange),
+                        style: AppText.b2.copyWith(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
                 ),
 
-                AppUnits.y24,
+                AppUnits.y20,
               ],
             ),
           ),

@@ -1,27 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:dooit/theme/colors.dart';
 import 'package:dooit/theme/units.dart';
+import 'package:dooit/theme/typography.dart';
+import 'package:dooit/routes/routes.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/password_input_field.dart';
 
-class CreateNewPasswordScreen extends StatelessWidget {
+class CreateNewPasswordScreen extends StatefulWidget {
   const CreateNewPasswordScreen({super.key});
+
+  @override
+  State<CreateNewPasswordScreen> createState() =>
+      _CreateNewPasswordScreenState();
+}
+
+class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
+  final TextEditingController _newPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
+  void _onSavePassword() {
+    final newPassword = _newPasswordController.text.trim();
+    final confirmPassword = _confirmPasswordController.text.trim();
+
+    if (newPassword.isEmpty || confirmPassword.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please fill in both fields")),
+      );
+      return;
+    }
+
+    if (newPassword != confirmPassword) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Passwords do not match")));
+      return;
+    }
+
+    Navigator.pushNamed(context, AppRoutes.loginScreen);
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () =>
-          FocusScope.of(context).unfocus(), // ✅ Hide keyboard on tap outside
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         backgroundColor: AppColors.scaffoldBackgroundColor,
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: AppUnits.a20,
+            padding: AppUnits.px24,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Back Arrow
                 Align(
                   alignment: Alignment.centerLeft,
                   child: IconButton(
@@ -30,71 +61,49 @@ class CreateNewPasswordScreen extends StatelessWidget {
                     onPressed: () => Navigator.pop(context),
                   ),
                 ),
-                AppUnits.y12,
+                AppUnits.y20,
 
-                // Title
-                const Text(
+                Text(
                   'Create New Password',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textColor,
-                  ),
+                  style: AppText.h1,
                   textAlign: TextAlign.left,
                 ),
                 AppUnits.y12,
 
-                // Subtitle
-                const Text(
+                Text(
                   'Your new password must be different from previously used passwords.',
-                  style: TextStyle(fontSize: 14, color: Colors.black54),
+                  style: AppText.b2.copyWith(color: Colors.black54),
                   textAlign: TextAlign.left,
                 ),
                 AppUnits.y40,
 
-                // New Password
-                const Text(
+                Text(
                   'New Password',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textColor,
-                  ),
+                  style: AppText.b2.copyWith(fontWeight: FontWeight.w500),
                 ),
                 AppUnits.y8,
-                const PasswordInputField(),
+                PasswordInputField(controller: _newPasswordController),
                 AppUnits.y40,
 
-                // Confirm Password
-                const Text(
+                Text(
                   'Confirm Password',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textColor,
-                  ),
+                  style: AppText.b2.copyWith(fontWeight: FontWeight.w500),
                 ),
                 AppUnits.y8,
-                const PasswordInputField(),
+                PasswordInputField(controller: _confirmPasswordController),
                 AppUnits.y20,
               ],
             ),
           ),
         ),
 
-        // ✅ Button fixed at bottom
         bottomNavigationBar: Padding(
           padding: EdgeInsets.only(
             left: 20,
             right: 20,
             bottom: MediaQuery.of(context).viewInsets.bottom + 20,
           ),
-          child: CustomButton(
-            label: 'Save Password',
-            onTap: () {
-              Navigator.pushNamed(context, '/login_screen');
-            },
-          ),
+          child: CustomButton(label: 'Save Password', onTap: _onSavePassword),
         ),
       ),
     );

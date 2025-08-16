@@ -1,4 +1,6 @@
 import 'package:dooit/theme/colors.dart';
+import 'package:dooit/theme/typography.dart';
+import 'package:dooit/theme/units.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
@@ -13,8 +15,8 @@ class CustomButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primaryColor, // Light orange
-          padding: EdgeInsets.symmetric(vertical: 14),
+          backgroundColor: AppColors.primaryColor,
+          padding: AppUnits.a16,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -22,10 +24,9 @@ class CustomButton extends StatelessWidget {
         onPressed: onTap,
         child: Text(
           label,
-          style: TextStyle(
-            fontSize: 16,
+          style: AppText.b1.copyWith(
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: AppColors.scaffoldBackgroundColor,
           ),
         ),
       ),

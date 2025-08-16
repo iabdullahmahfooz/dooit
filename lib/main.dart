@@ -6,6 +6,7 @@ import 'views/login_screen/login_screen.dart';
 import 'views/signup_screen/signup_screen.dart';
 import 'views/forget_password_screen/forget_password_screen.dart';
 import 'views/new_password_screen/new_password_screen.dart';
+import 'views/home_screen/home_screen.dart';
 
 void main() {
   runApp(const DooitApp());
@@ -30,6 +31,7 @@ class DooitApp extends StatelessWidget {
         '/signup_screen': (context) => const SignupScreen(),
         '/forget_password_screen': (context) => const ForgetPasswordScreen(),
         '/new_password_screen': (context) => const CreateNewPasswordScreen(),
+        '/home_screen': (context) => const HomeScreen(),
       },
     );
   }

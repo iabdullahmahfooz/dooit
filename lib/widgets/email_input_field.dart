@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:dooit/theme/colors.dart';
+import 'package:dooit/theme/typography.dart';
 
 class EmailInputField extends StatefulWidget {
-  const EmailInputField({super.key});
+  final TextEditingController? controller;
+
+  const EmailInputField({super.key, this.controller});
 
   @override
   State<EmailInputField> createState() => _EmailInputFieldState();
 }
 
 class _EmailInputFieldState extends State<EmailInputField> {
-  final TextEditingController _controller = TextEditingController();
   String? _errorText;
 
   bool _isValidEmail(String email) {
@@ -21,18 +24,24 @@ class _EmailInputFieldState extends State<EmailInputField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Email'),
+        Text("Email", style: AppText.b2.copyWith(color: AppColors.textColor)),
         const SizedBox(height: 8),
         TextField(
-          controller: _controller,
+          controller: widget.controller,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             hintText: 'eg abdullah@gmail.com',
+            hintStyle: AppText.b1.copyWith(color: Colors.black45),
             errorText: _errorText,
-            border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 16,
             ),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+            prefixIcon: const Icon(
+              Icons.email_outlined,
+              color: AppColors.textColor,
+            ),
           ),
           onChanged: (value) {
             setState(() {

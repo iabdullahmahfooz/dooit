@@ -1,5 +1,7 @@
 import 'package:dooit/routes/routes.dart';
 import 'package:dooit/theme/units.dart';
+import 'package:dooit/theme/colors.dart';
+import 'package:dooit/theme/typography.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
 
@@ -9,22 +11,28 @@ class GetStartedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackgroundColor,
       body: Padding(
-        padding: AppUnits.a24, // using app units instead of fixed 24.0
+        padding: AppUnits.a24,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: AppUnits.a40.top), // top spacing
+            SizedBox(height: AppUnits.a40.top),
+
             Text(
               'Get Started',
-              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+              style: AppText.h1.copyWith(color: AppColors.textColor),
             ),
-            SizedBox(height: AppUnits.a8.top), // small gap
+
+            SizedBox(height: AppUnits.a8.top),
+
             Text(
-              'create task . set reminder . track progress',
-              style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+              'create task · set reminder · track progress',
+              style: AppText.b1.copyWith(color: AppColors.greyColor),
             ),
+
             SizedBox(height: AppUnits.a20.top),
+
             Expanded(
               child: Center(
                 child: Image.asset(
@@ -33,6 +41,7 @@ class GetStartedScreen extends StatelessWidget {
                 ),
               ),
             ),
+
             Column(
               children: [
                 CustomButton(
@@ -47,6 +56,7 @@ class GetStartedScreen extends StatelessWidget {
                 ),
               ],
             ),
+
             SizedBox(height: AppUnits.a32.top),
           ],
         ),

@@ -1,3 +1,6 @@
+import 'package:dooit/routes/routes.dart';
+import 'package:dooit/theme/colors.dart';
+import 'package:dooit/theme/typography.dart';
 import 'package:dooit/theme/units.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,25 +14,21 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(), // ✅ Dismiss keyboard
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: AppUnits.px24, // ✅ Consistent side padding
+            padding: AppUnits.px24,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                AppUnits.y40, // ✅ Top spacing
-                // Title
-                const Text(
-                  'Create your account',
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                ),
+                AppUnits.y40,
+
+                Text('Create your account', style: AppText.h1),
                 AppUnits.y32,
 
-                // Full Name
-                const Text('Full Name'),
+                Text('Full Name', style: AppText.b2),
                 AppUnits.y8,
                 TextField(
                   decoration: InputDecoration(
@@ -42,28 +41,36 @@ class SignupScreen extends StatelessWidget {
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z ]')),
                   ],
+                  keyboardType: TextInputType.name,
                 ),
                 AppUnits.y20,
 
-                // Email
                 const EmailInputField(),
                 AppUnits.y20,
 
-                // Password
-                const Text('Password'),
+                Text(
+                  'Password',
+                  style: AppText.b2.copyWith(color: AppColors.textColor),
+                ),
                 AppUnits.y8,
                 const PasswordInputField(),
                 AppUnits.y32,
 
-                // Signup Button
-                CustomButton(label: 'Sign Up', onTap: () {}),
+                CustomButton(
+                  label: 'Sign Up',
+                  onTap: () =>
+                      Navigator.pushNamed(context, AppRoutes.homeScreen),
+                ),
                 AppUnits.y48,
 
-                // Social login text
-                const Center(child: Text('OR SIGN UP WITH:')),
+                Center(
+                  child: Text(
+                    'OR SIGN UP WITH:',
+                    style: AppText.b2.copyWith(color: Colors.grey[600]),
+                  ),
+                ),
                 AppUnits.y20,
 
-                // Social Icons
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -76,23 +83,25 @@ class SignupScreen extends StatelessWidget {
                 ),
                 AppUnits.y40,
 
-                // Bottom Login Text
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Already have an account?"),
+                    Text("Already have an account?", style: AppText.b2),
                     TextButton(
                       onPressed: () =>
-                          Navigator.pushNamed(context, '/login_screen'),
-                      child: const Text(
+                          Navigator.pushNamed(context, AppRoutes.loginScreen),
+                      child: Text(
                         'Login',
-                        style: TextStyle(color: Colors.orange),
+                        style: AppText.b2.copyWith(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
                 ),
 
-                AppUnits.y20, // ✅ Bottom breathing space
+                AppUnits.y20,
               ],
             ),
           ),
