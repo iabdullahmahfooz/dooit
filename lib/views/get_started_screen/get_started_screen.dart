@@ -47,12 +47,14 @@ class GetStartedScreen extends StatelessWidget {
                 CustomButton(
                   label: 'Login',
                   onTap: () =>
-                      Navigator.pushNamed(context, AppRoutes.loginScreen),
+                      AppRoutes.pushReplacement(context, AppRoutes.login),
                 ),
                 SizedBox(height: AppUnits.a16.top),
+
                 CustomButton(
                   label: 'Signup',
-                  onTap: () => Navigator.pushNamed(context, '/signup_screen'),
+                  onTap: () =>
+                      AppRoutes.pushReplacement(context, AppRoutes.signup),
                 ),
               ],
             ),

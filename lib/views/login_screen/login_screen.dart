@@ -39,9 +39,9 @@ class LoginScreen extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: () => Navigator.pushNamed(
+                    onPressed: () => AppRoutes.pushReplacement(
                       context,
-                      AppRoutes.forgetPasswordScreen,
+                      AppRoutes.forgetPassword,
                     ),
                     child: Text(
                       'Forgot password?',
@@ -55,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                 CustomButton(
                   label: 'Login',
                   onTap: () =>
-                      Navigator.pushNamed(context, AppRoutes.homeScreen),
+                      AppRoutes.pushAndRemoveUntil(context, AppRoutes.home),
                 ),
                 AppUnits.y48,
 
@@ -85,7 +85,7 @@ class LoginScreen extends StatelessWidget {
                     Text("Don't have an account?", style: AppText.b2),
                     TextButton(
                       onPressed: () =>
-                          Navigator.pushNamed(context, AppRoutes.signupScreen),
+                          AppRoutes.pushReplacement(context, AppRoutes.signup),
                       child: Text(
                         'Sign up',
                         style: AppText.b2.copyWith(

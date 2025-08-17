@@ -6,15 +6,14 @@ import 'package:dooit/routes/routes.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/password_input_field.dart';
 
-class CreateNewPasswordScreen extends StatefulWidget {
-  const CreateNewPasswordScreen({super.key});
+class NewPasswordScreen extends StatefulWidget {
+  const NewPasswordScreen({super.key});
 
   @override
-  State<CreateNewPasswordScreen> createState() =>
-      _CreateNewPasswordScreenState();
+  State<NewPasswordScreen> createState() => _NewPasswordScreenState();
 }
 
-class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
+class _NewPasswordScreenState extends State<NewPasswordScreen> {
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
@@ -37,7 +36,7 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
       return;
     }
 
-    Navigator.pushNamed(context, AppRoutes.loginScreen);
+    AppRoutes.pushReplacement(context, AppRoutes.login);
   }
 
   @override
@@ -58,7 +57,11 @@ class _CreateNewPasswordScreenState extends State<CreateNewPasswordScreen> {
                   child: IconButton(
                     color: AppColors.textColor,
                     icon: const Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.pop(context),
+
+                    onPressed: () => AppRoutes.pushReplacement(
+                      context,
+                      AppRoutes.forgetPassword,
+                    ),
                   ),
                 ),
                 AppUnits.y20,

@@ -59,7 +59,7 @@ class SignupScreen extends StatelessWidget {
                 CustomButton(
                   label: 'Sign Up',
                   onTap: () =>
-                      Navigator.pushNamed(context, AppRoutes.homeScreen),
+                      AppRoutes.pushAndRemoveUntil(context, AppRoutes.home),
                 ),
                 AppUnits.y48,
 
@@ -89,7 +89,7 @@ class SignupScreen extends StatelessWidget {
                     Text("Already have an account?", style: AppText.b2),
                     TextButton(
                       onPressed: () =>
-                          Navigator.pushNamed(context, AppRoutes.loginScreen),
+                          AppRoutes.pushReplacement(context, AppRoutes.login),
                       child: Text(
                         'Login',
                         style: AppText.b2.copyWith(

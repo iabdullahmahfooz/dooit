@@ -19,6 +19,7 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
       obscureText: _obscureText,
       decoration: InputDecoration(
         hintText: "Enter password",
+        prefixIcon: const Icon(Icons.lock),
         suffixIcon: IconButton(
           icon: Icon(_obscureText ? Icons.visibility_off : Icons.visibility),
           onPressed: () {
