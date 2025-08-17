@@ -52,8 +52,11 @@ class LoginScreen extends StatelessWidget {
 
                 AppUnits.y20,
 
-                CustomButton(label: 'Login', onTap: () {}),
-
+                CustomButton(
+                  label: 'Login',
+                  onTap: () =>
+                      Navigator.pushNamed(context, AppRoutes.homeScreen),
+                ),
                 AppUnits.y48,
 
                 Center(

@@ -1,0 +1,13 @@
+class Task {
+  final String title;
+  final String description;
+  final String time;
+  bool completed;
+
+  Task({
+    required this.title,
+    required this.description,
+    required this.time,
+    this.completed = false,
+  });
+}
