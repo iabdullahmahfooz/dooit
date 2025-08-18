@@ -10,6 +10,7 @@ import '../../widgets/custom_button.dart';
 import '../../widgets/email_input_field.dart';
 import '../../widgets/password_input_field.dart';
 import '../../utils/snackbar_helper.dart';
+import '../../utils/validators_helper.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,6 +20,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   DateTime? _lastBackPressTime;
 
   Future<bool> _onWillPop() {
@@ -39,6 +43,24 @@ class _LoginScreenState extends State<LoginScreen> {
     return Future.value(true);
   }
 
+  void _login() {
+    if (_formKey.currentState!.validate()) {
+      // ✅ Only navigate if form is valid
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRoutes.home,
+        (route) => false,
+      );
+    } else {
+      showSmallSnackBar(
+        context,
+        "Invalid Input",
+        "Please fill in all fields correctly",
+        contentType: ContentType.failure,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -51,92 +73,96 @@ class _LoginScreenState extends State<LoginScreen> {
             body: SafeArea(
               child: SingleChildScrollView(
                 padding: AppUnits.px24,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    AppUnits.y40,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      AppUnits.y40,
+                      Text('Login to your account', style: AppText.h1),
+                      AppUnits.y40,
 
-                    Text('Login to your account', style: AppText.h1),
-                    AppUnits.y40,
-
-                    const EmailInputField(),
-                    AppUnits.y20,
-
-                    Text('Password', style: AppText.b2),
-                    AppUnits.y8,
-                    const PasswordInputField(),
-                    AppUnits.y12,
-
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () => Navigator.pushNamed(
-                          context,
-                          AppRoutes.forgetPassword,
-                        ),
-                        child: Text(
-                          'Forgot password?',
-                          style: AppText.b2.copyWith(
-                            color: AppColors.primaryColor,
-                          ),
-                        ),
+                      /// ✅ Email Field with Validator
+                      EmailInputField(
+                        controller: _emailController,
+                        validator: ValidatorsHelper.validateEmail,
                       ),
-                    ),
+                      AppUnits.y20,
 
-                    AppUnits.y20,
+                      Text('Password', style: AppText.b2),
+                      AppUnits.y8,
 
-                    CustomButton(
-                      label: 'Login',
-                      onTap: () => Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        AppRoutes.home,
-                        (route) => false,
+                      /// ✅ Password Field with Validator
+                      PasswordInputField(
+                        controller: _passwordController,
+                        validator: ValidatorsHelper.validatePassword,
                       ),
-                    ),
-                    AppUnits.y48,
+                      AppUnits.y12,
 
-                    Center(
-                      child: Text(
-                        'OR LOGIN WITH:',
-                        style: AppText.b2.copyWith(color: Colors.grey[600]),
-                      ),
-                    ),
-                    AppUnits.y24,
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(StaticAssets.fbIcon, height: 42),
-                        AppUnits.x32,
-                        Image.asset(StaticAssets.appleIcon, height: 42),
-                        AppUnits.x32,
-                        Image.asset(StaticAssets.googleIcon, height: 42),
-                      ],
-                    ),
-                    AppUnits.y40,
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Don't have an account?", style: AppText.b2),
-                        TextButton(
-                          onPressed: () => Navigator.popAndPushNamed(
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () => Navigator.pushNamed(
                             context,
-                            AppRoutes.signup,
+                            AppRoutes.forgetPassword,
                           ),
                           child: Text(
-                            'Sign up',
+                            'Forgot password?',
                             style: AppText.b2.copyWith(
                               color: AppColors.primaryColor,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
 
-                    AppUnits.y20,
-                  ],
+                      AppUnits.y20,
+
+                      CustomButton(label: 'Login', onTap: _login),
+                      AppUnits.y48,
+
+                      Center(
+                        child: Text(
+                          'OR LOGIN WITH:',
+                          style: AppText.b2.copyWith(color: Colors.grey[600]),
+                        ),
+                      ),
+                      AppUnits.y24,
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(StaticAssets.fbIcon, height: 42),
+                          AppUnits.x32,
+                          Image.asset(StaticAssets.appleIcon, height: 42),
+                          AppUnits.x32,
+                          Image.asset(StaticAssets.googleIcon, height: 42),
+                        ],
+                      ),
+                      AppUnits.y40,
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Don't have an account?", style: AppText.b2),
+                          TextButton(
+                            onPressed: () => Navigator.popAndPushNamed(
+                              context,
+                              AppRoutes.signup,
+                            ),
+                            child: Text(
+                              'Sign up',
+                              style: AppText.b2.copyWith(
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      AppUnits.y20,
+                    ],
+                  ),
                 ),
               ),
             ),

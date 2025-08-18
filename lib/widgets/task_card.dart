@@ -3,6 +3,7 @@ import 'package:dooit/theme/colors.dart';
 import 'package:dooit/theme/typography.dart';
 import 'package:dooit/theme/units.dart';
 import 'package:dooit/models/task.dart';
+import 'package:intl/intl.dart';
 
 class TaskCard extends StatelessWidget {
   final Task task;
@@ -18,6 +19,11 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Format the DateTime into something user-friendly
+    final formattedDate = DateFormat(
+      'hh:mm a • dd MMM, yyyy',
+    ).format(task.createdAt);
+
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -27,10 +33,16 @@ class TaskCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Title + Edit button
             Row(
               children: [
-                Text(task.title, style: AppText.h3),
-                const Spacer(),
+                Expanded(
+                  child: Text(
+                    task.title,
+                    style: AppText.h3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
                 IconButton(
                   icon: const Icon(Icons.edit, size: 20),
                   onPressed: onEdit,
@@ -39,34 +51,36 @@ class TaskCard extends StatelessWidget {
             ),
             AppUnits.y8,
 
+            // Description
             Text(
               task.description,
               style: AppText.b2.copyWith(color: AppColors.greyColor),
             ),
             AppUnits.y12,
 
+            // Date + Completion Toggle
             Row(
               children: [
-                Text(task.time, style: AppText.b3),
+                Text(formattedDate, style: AppText.b3),
                 const Spacer(),
                 GestureDetector(
                   onTap: onToggleComplete,
                   child: Row(
                     children: [
                       Text(
-                        "Mark as completed",
+                        task.isCompleted ? "Completed" : "Mark as completed",
                         style: AppText.b3.copyWith(
-                          color: task.completed
+                          color: task.isCompleted
                               ? Colors.green
                               : AppColors.greyColor,
                         ),
                       ),
                       AppUnits.x8,
                       Icon(
-                        task.completed
+                        task.isCompleted
                             ? Icons.check_box
                             : Icons.check_box_outline_blank,
-                        color: task.completed
+                        color: task.isCompleted
                             ? Colors.green
                             : AppColors.greyColor,
                       ),

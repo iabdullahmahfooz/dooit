@@ -1,3 +1,4 @@
+import 'package:dooit/mocks/mock_tasks.dart';
 import 'package:flutter/material.dart';
 import 'package:dooit/theme/colors.dart';
 import 'package:dooit/theme/units.dart';
@@ -15,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Task> tasks = List.from(dummyTasks);
+  List<Task> tasks = List.from(mockTasks);
 
   DateTime? lastBackPressed;
   int currentIndex = 0;
@@ -45,14 +46,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void toggleComplete(int index) {
     setState(() {
-      tasks[index].completed = !tasks[index].completed;
+      tasks[index].isCompleted = !tasks[index].isCompleted;
 
       showSmallSnackBar(
-        tasks[index].completed ? 'Completed!' : 'Pending Again!',
-        tasks[index].completed
+        tasks[index].isCompleted ? 'Completed!' : 'Pending Again!',
+        tasks[index].isCompleted
             ? '${tasks[index].title} marked as completed 🎉'
             : '${tasks[index].title} marked as pending',
-        tasks[index].completed ? ContentType.success : ContentType.warning,
+        tasks[index].isCompleted ? ContentType.success : ContentType.warning,
       );
     });
   }

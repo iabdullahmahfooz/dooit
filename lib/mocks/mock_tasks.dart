@@ -1,0 +1,74 @@
+import 'package:dooit/models/task.dart';
+
+List<Task> mockTasks = [
+  Task(
+    id: 1,
+    title: "Exercise",
+    description: "Carry out a yoga session",
+    createdAt: DateTime(2025, 2, 19, 7, 0),
+    isCompleted: false,
+  ),
+  Task(
+    id: 2,
+    title: "Code Review",
+    description: "Review pull requests for the authentication module.",
+    createdAt: DateTime(2025, 2, 19, 9, 30),
+    isCompleted: false,
+  ),
+  Task(
+    id: 3,
+    title: "Project Update",
+    description: "Send weekly progress report to the manager.",
+    createdAt: DateTime(2025, 2, 19, 11, 0),
+    isCompleted: true,
+  ),
+  Task(
+    id: 4,
+    title: "Team Meeting",
+    description: "Attend daily stand-up meeting with the development team.",
+    createdAt: DateTime(2025, 2, 19, 12, 30),
+    isCompleted: false,
+  ),
+  Task(
+    id: 5,
+    title: "Grocery Shopping",
+    description: "Buy groceries: milk, eggs, and bread.",
+    createdAt: DateTime(2025, 2, 19, 15, 0),
+    isCompleted: false,
+  ),
+  Task(
+    id: 6,
+    title: "Call Mom",
+    description: "Have a quick catch-up call with mom.",
+    createdAt: DateTime(2025, 2, 19, 16, 30),
+    isCompleted: false,
+  ),
+  Task(
+    id: 7,
+    title: "Study Flutter",
+    description: "Complete Flutter state management tutorial.",
+    createdAt: DateTime(2025, 2, 19, 18, 0),
+    isCompleted: false,
+  ),
+  Task(
+    id: 8,
+    title: "Dinner with Friends",
+    description: "Dinner reservation at Italian restaurant.",
+    createdAt: DateTime(2025, 2, 19, 20, 0),
+    isCompleted: false,
+  ),
+  Task(
+    id: 9,
+    title: "Read a Book",
+    description: "Read at least 20 pages of 'Atomic Habits'.",
+    createdAt: DateTime(2025, 2, 19, 21, 30),
+    isCompleted: true,
+  ),
+  Task(
+    id: 10,
+    title: "Plan Tomorrow",
+    description: "Write down tasks and goals for tomorrow.",
+    createdAt: DateTime(2025, 2, 19, 22, 0),
+    isCompleted: false,
+  ),
+];

@@ -1,38 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:dooit/theme/colors.dart';
 import 'package:dooit/theme/typography.dart';
+import 'package:dooit/utils/validators_helper.dart'; // ✅ import
 
-class EmailInputField extends StatefulWidget {
+class EmailInputField extends StatelessWidget {
   final TextEditingController? controller;
+  final String? label;
+  final String? hint;
+  final String? Function(String?)? validator; // ✅ support external validator
+  final Function(String)? onChanged;
 
-  const EmailInputField({super.key, this.controller});
-
-  @override
-  State<EmailInputField> createState() => _EmailInputFieldState();
-}
-
-class _EmailInputFieldState extends State<EmailInputField> {
-  String? _errorText;
-
-  bool _isValidEmail(String email) {
-    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    return emailRegex.hasMatch(email);
-  }
+  const EmailInputField({
+    super.key,
+    this.controller,
+    this.label,
+    this.hint,
+    this.validator,
+    this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Email", style: AppText.b2.copyWith(color: AppColors.textColor)),
+        // ✅ Added static text "Email"
+        const Text(
+          "Email",
+          style: TextStyle(fontSize: 16, color: AppColors.textColor),
+        ),
+        const SizedBox(height: 6),
+
+        if (label != null)
+          Text(label!, style: AppText.b2.copyWith(color: AppColors.textColor)),
         const SizedBox(height: 8),
-        TextField(
-          controller: widget.controller,
+
+        TextFormField(
+          controller: controller,
           keyboardType: TextInputType.emailAddress,
+          validator:
+              validator ??
+              ValidatorsHelper.validateEmail, // ✅ default validator
           decoration: InputDecoration(
-            hintText: 'eg abdullah@gmail.com',
+            hintText: hint ?? 'eg: abdullah@gmail.com',
             hintStyle: AppText.b1.copyWith(color: Colors.black45),
-            errorText: _errorText,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 12,
@@ -43,15 +54,7 @@ class _EmailInputFieldState extends State<EmailInputField> {
               color: AppColors.textColor,
             ),
           ),
-          onChanged: (value) {
-            setState(() {
-              if (value.isEmpty || _isValidEmail(value)) {
-                _errorText = null;
-              } else {
-                _errorText = 'Please enter a valid email';
-              }
-            });
-          },
+          onChanged: onChanged,
         ),
       ],
     );
