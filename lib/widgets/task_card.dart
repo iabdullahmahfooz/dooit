@@ -2,30 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:dooit/theme/colors.dart';
 import 'package:dooit/theme/typography.dart';
 import 'package:dooit/theme/units.dart';
+import 'package:dooit/models/task.dart';
 
-class TaskCard extends StatefulWidget {
-  final String title;
-  final String description;
-  final String time;
-  final bool isCompleted;
+class TaskCard extends StatelessWidget {
+  final Task task;
   final VoidCallback onEdit;
   final VoidCallback onToggleComplete;
 
   const TaskCard({
     super.key,
-    required this.title,
-    required this.description,
-    required this.time,
-    required this.isCompleted,
+    required this.task,
     required this.onEdit,
     required this.onToggleComplete,
   });
 
-  @override
-  State<TaskCard> createState() => _TaskCardState();
-}
-
-class _TaskCardState extends State<TaskCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -39,44 +29,44 @@ class _TaskCardState extends State<TaskCard> {
           children: [
             Row(
               children: [
-                Text(widget.title, style: AppText.h3),
+                Text(task.title, style: AppText.h3),
                 const Spacer(),
                 IconButton(
                   icon: const Icon(Icons.edit, size: 20),
-                  onPressed: widget.onEdit,
+                  onPressed: onEdit,
                 ),
               ],
             ),
             AppUnits.y8,
 
             Text(
-              widget.description,
+              task.description,
               style: AppText.b2.copyWith(color: AppColors.greyColor),
             ),
             AppUnits.y12,
 
             Row(
               children: [
-                Text(widget.time, style: AppText.b3),
+                Text(task.time, style: AppText.b3),
                 const Spacer(),
                 GestureDetector(
-                  onTap: widget.onToggleComplete,
+                  onTap: onToggleComplete,
                   child: Row(
                     children: [
                       Text(
                         "Mark as completed",
                         style: AppText.b3.copyWith(
-                          color: widget.isCompleted
+                          color: task.completed
                               ? Colors.green
                               : AppColors.greyColor,
                         ),
                       ),
                       AppUnits.x8,
                       Icon(
-                        widget.isCompleted
+                        task.completed
                             ? Icons.check_box
                             : Icons.check_box_outline_blank,
-                        color: widget.isCompleted
+                        color: task.completed
                             ? Colors.green
                             : AppColors.greyColor,
                       ),

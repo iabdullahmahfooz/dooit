@@ -27,9 +27,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                   child: IconButton(
                     color: AppColors.textColor,
                     icon: const Icon(Icons.arrow_back),
-
-                    onPressed: () =>
-                        AppRoutes.pushReplacement(context, AppRoutes.login),
+                    onPressed: () => Navigator.pop(context), 
                   ),
                 ),
                 AppUnits.y20,
@@ -63,8 +61,9 @@ class ForgetPasswordScreen extends StatelessWidget {
           ),
           child: CustomButton(
             label: 'Next',
-            onTap: () =>
-                AppRoutes.pushReplacement(context, AppRoutes.newPassword),
+            onTap: () {
+              Navigator.popAndPushNamed(context, AppRoutes.newPassword);
+            },
           ),
         ),
       ),

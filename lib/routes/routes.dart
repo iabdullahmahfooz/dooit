@@ -6,7 +6,7 @@ import 'package:dooit/views/forget_password_screen/forget_password_screen.dart';
 import 'package:dooit/views/new_password_screen/new_password_screen.dart';
 import 'package:dooit/views/home_screen/home_screen.dart';
 
-abstract class AppRoutes {
+class AppRoutes {
   static const String getStarted = '/get_started';
   static const String login = '/login';
   static const String signup = '/signup';
@@ -31,16 +31,8 @@ abstract class AppRoutes {
       default:
         return MaterialPageRoute(
           builder: (_) =>
-              const Scaffold(body: Center(child: Text("Route not found"))),
+              const Scaffold(body: Center(child: Text("⚠️ Route not found"))),
         );
     }
-  }
-
-  static void pushReplacement(BuildContext context, String routeName) {
-    Navigator.pushReplacementNamed(context, routeName);
-  }
-
-  static void pushAndRemoveUntil(BuildContext context, String routeName) {
-    Navigator.pushNamedAndRemoveUntil(context, routeName, (route) => false);
   }
 }

@@ -18,6 +18,8 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
+  bool _passwordsMatch = true;
+
   void _onSavePassword() {
     final newPassword = _newPasswordController.text.trim();
     final confirmPassword = _confirmPasswordController.text.trim();
@@ -30,13 +32,16 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
     }
 
     if (newPassword != confirmPassword) {
+      setState(() => _passwordsMatch = false);
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text("Passwords do not match")));
       return;
     }
 
-    AppRoutes.pushReplacement(context, AppRoutes.login);
+    setState(() => _passwordsMatch = true);
+
+    Navigator.pushReplacementNamed(context, AppRoutes.login);
   }
 
   @override
@@ -57,26 +62,17 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                   child: IconButton(
                     color: AppColors.textColor,
                     icon: const Icon(Icons.arrow_back),
-
-                    onPressed: () => AppRoutes.pushReplacement(
-                      context,
-                      AppRoutes.forgetPassword,
-                    ),
+                    onPressed: () => Navigator.pop(context),
                   ),
                 ),
                 AppUnits.y20,
 
-                Text(
-                  'Create New Password',
-                  style: AppText.h1,
-                  textAlign: TextAlign.left,
-                ),
+                Text('Create New Password', style: AppText.h1),
                 AppUnits.y12,
 
                 Text(
                   'Your new password must be different from previously used passwords.',
                   style: AppText.b2.copyWith(color: Colors.black54),
-                  textAlign: TextAlign.left,
                 ),
                 AppUnits.y40,
 
@@ -94,6 +90,14 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                 ),
                 AppUnits.y8,
                 PasswordInputField(controller: _confirmPasswordController),
+                if (!_passwordsMatch)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      "Passwords do not match",
+                      style: TextStyle(color: Colors.red, fontSize: 12),
+                    ),
+                  ),
                 AppUnits.y20,
               ],
             ),
