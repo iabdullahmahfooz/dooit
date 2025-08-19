@@ -4,7 +4,8 @@ import 'package:dooit/theme/colors.dart';
 import 'package:dooit/theme/typography.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
-import 'package:dooit/utils/back_navigation_wrapper.dart'; 
+import 'package:dooit/utils/back_navigation_wrapper.dart';
+
 class GetStartedScreen extends StatelessWidget {
   const GetStartedScreen({super.key});
 
@@ -56,10 +57,7 @@ class GetStartedScreen extends StatelessWidget {
 
                   CustomButton(
                     label: 'Signup',
-                    onTap: () => Navigator.pushReplacementNamed(
-                      context,
-                      AppRoutes.signup,
-                    ),
+                    onTap: () => Navigator.pushNamed(context, AppRoutes.signup),
                   ),
                 ],
               ),

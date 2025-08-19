@@ -41,12 +41,12 @@ abstract class AppUnits {
   static EdgeInsets a40 = const EdgeInsets.all(40);
 
   // Paddings (only horizontal or vertical)
-  static EdgeInsets px24 = const EdgeInsets.symmetric(
+  static EdgeInsets hx24 = const EdgeInsets.symmetric(
     horizontal: 24,
   ); // Common for screens
-  static EdgeInsets px16 = const EdgeInsets.symmetric(horizontal: 16);
-  static EdgeInsets py16 = const EdgeInsets.symmetric(vertical: 16);
-  static EdgeInsets py20 = const EdgeInsets.symmetric(vertical: 20);
+  static EdgeInsets hx16 = const EdgeInsets.symmetric(horizontal: 16);
+  static EdgeInsets vy16 = const EdgeInsets.symmetric(vertical: 16);
+  static EdgeInsets vy20 = const EdgeInsets.symmetric(vertical: 20);
 
   // Special large paddings for top-heavy layouts
   static EdgeInsets pt80px24 = const EdgeInsets.only(

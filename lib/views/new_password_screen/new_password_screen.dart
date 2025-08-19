@@ -53,7 +53,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: AppUnits.px24,
+            padding: AppUnits.hx24,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

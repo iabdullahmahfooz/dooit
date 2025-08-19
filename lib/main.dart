@@ -19,7 +19,7 @@ class DooitApp extends StatelessWidget {
         textTheme: const TextTheme(bodyMedium: TextStyle(fontSize: 16)),
       ),
       initialRoute: AppRoutes.getStarted,
-      onGenerateRoute: AppRoutes.generateRoute,
+      routes: AppRoutes.routes,
     );
   }
 }

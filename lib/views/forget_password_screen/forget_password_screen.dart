@@ -18,7 +18,7 @@ class ForgetPasswordScreen extends StatelessWidget {
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: AppUnits.px24,
+            padding: AppUnits.hx24,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

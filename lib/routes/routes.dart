@@ -14,25 +14,13 @@ class AppRoutes {
   static const String newPassword = '/new_password';
   static const String home = '/home';
 
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case getStarted:
-        return MaterialPageRoute(builder: (_) => const GetStartedScreen());
-      case login:
-        return MaterialPageRoute(builder: (_) => const LoginScreen());
-      case signup:
-        return MaterialPageRoute(builder: (_) => const SignupScreen());
-      case forgetPassword:
-        return MaterialPageRoute(builder: (_) => const ForgetPasswordScreen());
-      case newPassword:
-        return MaterialPageRoute(builder: (_) => const NewPasswordScreen());
-      case home:
-        return MaterialPageRoute(builder: (_) => const HomeScreen());
-      default:
-        return MaterialPageRoute(
-          builder: (_) =>
-              const Scaffold(body: Center(child: Text("⚠️ Route not found"))),
-        );
-    }
-  }
+  // ✅ Simple routes map (no switch, no generateRoute)
+  static Map<String, WidgetBuilder> routes = {
+    getStarted: (context) => const GetStartedScreen(),
+    login: (context) => const LoginScreen(),
+    signup: (context) => const SignupScreen(),
+    forgetPassword: (context) => const ForgetPasswordScreen(),
+    newPassword: (context) => const NewPasswordScreen(),
+    home: (context) => const HomeScreen(),
+  };
 }

@@ -21,11 +21,24 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  // ✅ Controllers
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
   DateTime? _lastBackPressTime;
 
-  Future<bool> _onWillPop() {
+  // ✅ Dispose controllers to free memory
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _onPopInvokedWithResult(bool didPop, Object? result) {
+    if (didPop) return; // If pop was allowed, do nothing
+
     final now = DateTime.now();
     if (_lastBackPressTime == null ||
         now.difference(_lastBackPressTime!) > const Duration(seconds: 2)) {
@@ -37,15 +50,15 @@ class _LoginScreenState extends State<LoginScreen> {
         "Press back again to exit",
         contentType: ContentType.warning,
       );
-
-      return Future.value(false);
+    } else {
+      // Allow pop to exit the app
+      Navigator.of(context).pop(true);
     }
-    return Future.value(true);
   }
 
   void _login() {
     if (_formKey.currentState!.validate()) {
-      // ✅ Only navigate if form is valid
+      // ✅ Navigate only if valid
       Navigator.pushNamedAndRemoveUntil(
         context,
         AppRoutes.home,
@@ -63,8 +76,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onWillPop,
+    return PopScope(
+      canPop: false, // Prevent default pop behavior
+      onPopInvokedWithResult: _onPopInvokedWithResult,
       child: BackNavigationWrapper(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -72,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
             resizeToAvoidBottomInset: true,
             body: SafeArea(
               child: SingleChildScrollView(
-                padding: AppUnits.px24,
+                padding: AppUnits.hx24,
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -82,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text('Login to your account', style: AppText.h1),
                       AppUnits.y40,
 
-                      /// ✅ Email Field with Validator
+                      // ✅ Email Field with Validator
                       EmailInputField(
                         controller: _emailController,
                         validator: ValidatorsHelper.validateEmail,
@@ -92,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text('Password', style: AppText.b2),
                       AppUnits.y8,
 
-                      /// ✅ Password Field with Validator
+                      // ✅ Password Field with Validator
                       PasswordInputField(
                         controller: _passwordController,
                         validator: ValidatorsHelper.validatePassword,
@@ -145,10 +159,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Text("Don't have an account?", style: AppText.b2),
                           TextButton(
-                            onPressed: () => Navigator.popAndPushNamed(
-                              context,
-                              AppRoutes.signup,
-                            ),
+                            onPressed: () =>
+                                Navigator.pushNamed(context, AppRoutes.signup),
                             child: Text(
                               'Sign up',
                               style: AppText.b2.copyWith(
