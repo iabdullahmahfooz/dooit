@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:dooit/theme/colors.dart';
 import 'package:dooit/theme/units.dart';
@@ -5,6 +6,8 @@ import 'package:dooit/theme/typography.dart';
 import 'package:dooit/routes/routes.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/password_input_field.dart';
+import '../../utils/validators_helper.dart';
+import '../../utils/snackbar_helper.dart'; // Assuming this is where showSmallSnackBar is located
 
 class NewPasswordScreen extends StatefulWidget {
   const NewPasswordScreen({super.key});
@@ -17,31 +20,40 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-
-  bool _passwordsMatch = true;
+  final _formKey = GlobalKey<FormState>();
 
   void _onSavePassword() {
-    final newPassword = _newPasswordController.text.trim();
-    final confirmPassword = _confirmPasswordController.text.trim();
-
-    if (newPassword.isEmpty || confirmPassword.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please fill in both fields")),
-      );
-      return;
-    }
-
-    if (newPassword != confirmPassword) {
-      setState(() => _passwordsMatch = false);
-      ScaffoldMessenger.of(
+    if (_formKey.currentState!.validate()) {
+      showSmallSnackBar(
         context,
-      ).showSnackBar(const SnackBar(content: Text("Passwords do not match")));
-      return;
+        "Success",
+        "Password updated successfully",
+        contentType: ContentType.success,
+      );
+      Navigator.pushReplacementNamed(context, AppRoutes.login);
+    } else {
+      // Determine specific error message
+      String errorMessage = "Please fix the errors in the form";
+      final newPasswordError = ValidatorsHelper.validatePassword(
+        _newPasswordController.text,
+      );
+      final confirmPasswordError = ValidatorsHelper.confirmPasswordValidator(
+        _newPasswordController,
+      )(_confirmPasswordController.text);
+
+      if (newPasswordError != null) {
+        errorMessage = newPasswordError;
+      } else if (confirmPasswordError != null) {
+        errorMessage = confirmPasswordError;
+      }
+
+      showSmallSnackBar(
+        context,
+        "Error",
+        errorMessage,
+        contentType: ContentType.failure,
+      );
     }
-
-    setState(() => _passwordsMatch = true);
-
-    Navigator.pushReplacementNamed(context, AppRoutes.login);
   }
 
   @override
@@ -54,56 +66,57 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
         body: SafeArea(
           child: SingleChildScrollView(
             padding: AppUnits.hx24,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(
-                    color: AppColors.textColor,
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ),
-                AppUnits.y20,
-
-                Text('Create New Password', style: AppText.h1),
-                AppUnits.y12,
-
-                Text(
-                  'Your new password must be different from previously used passwords.',
-                  style: AppText.b2.copyWith(color: Colors.black54),
-                ),
-                AppUnits.y40,
-
-                Text(
-                  'New Password',
-                  style: AppText.b2.copyWith(fontWeight: FontWeight.w500),
-                ),
-                AppUnits.y8,
-                PasswordInputField(controller: _newPasswordController),
-                AppUnits.y40,
-
-                Text(
-                  'Confirm Password',
-                  style: AppText.b2.copyWith(fontWeight: FontWeight.w500),
-                ),
-                AppUnits.y8,
-                PasswordInputField(controller: _confirmPasswordController),
-                if (!_passwordsMatch)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      "Passwords do not match",
-                      style: TextStyle(color: Colors.red, fontSize: 12),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                      color: AppColors.textColor,
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () => Navigator.pushReplacementNamed(
+                        context,
+                        AppRoutes.forgetPassword,
+                      ),
                     ),
                   ),
-                AppUnits.y20,
-              ],
+                  AppUnits.y20,
+                  Text('Create New Password', style: AppText.h1),
+                  AppUnits.y12,
+                  Text(
+                    'Your new password must be different from previously used passwords.',
+                    style: AppText.b2.copyWith(color: Colors.black54),
+                  ),
+                  AppUnits.y40,
+                  Text(
+                    'New Password',
+                    style: AppText.b2.copyWith(fontWeight: FontWeight.w500),
+                  ),
+                  AppUnits.y8,
+                  PasswordInputField(
+                    controller: _newPasswordController,
+                    validator: ValidatorsHelper.validatePassword,
+                  ),
+                  AppUnits.y40,
+                  Text(
+                    'Confirm Password',
+                    style: AppText.b2.copyWith(fontWeight: FontWeight.w500),
+                  ),
+                  AppUnits.y8,
+                  PasswordInputField(
+                    controller: _confirmPasswordController,
+                    validator: ValidatorsHelper.confirmPasswordValidator(
+                      _newPasswordController,
+                    ),
+                  ),
+                  AppUnits.y20,
+                ],
+              ),
             ),
           ),
         ),
-
         bottomNavigationBar: Padding(
           padding: EdgeInsets.only(
             left: 20,
