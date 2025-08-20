@@ -39,12 +39,16 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.label != null)
+        // Show label only if provided
+        if (widget.label != null) ...[
           Text(
             widget.label!,
             style: AppText.b2.copyWith(color: AppColors.textColor),
           ),
-        const SizedBox(height: 8),
+          const SizedBox(height: 8),
+        ],
+
+        // Input field
         TextFormField(
           controller: widget.controller,
           obscureText: _obscureText,
@@ -52,7 +56,27 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
           decoration: InputDecoration(
             hintText: widget.hint ?? 'Enter your password',
             hintStyle: AppText.b1.copyWith(color: Colors.black45),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            filled: true,
+            fillColor: AppColors.fields,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(
+                color: AppColors.scaffoldBackgroundColor,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(
+                color: AppColors.scaffoldBackgroundColor,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(
+                color: AppColors.primaryColor,
+                width: 1.5,
+              ),
+            ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 12,
               vertical: 16,

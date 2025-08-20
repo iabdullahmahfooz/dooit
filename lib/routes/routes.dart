@@ -1,3 +1,4 @@
+import 'package:dooit/views/add_task_screen/add_task_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dooit/views/get_started_screen/get_started_screen.dart';
 import 'package:dooit/views/login_screen/login_screen.dart';
@@ -15,6 +16,7 @@ class AppRoutes {
   static const String newPassword = '/new_password';
   static const String home = '/home';
   static const String task = '/task';
+  static const String addTask = '/add_task';
 
   // ✅ Simple routes map (no switch, no generateRoute)
   static Map<String, WidgetBuilder> routes = {
@@ -25,5 +27,6 @@ class AppRoutes {
     newPassword: (context) => const NewPasswordScreen(),
     home: (context) => const HomeScreen(),
     task: (context) => const TaskScreen(),
+    addTask: (context) => const AddTaskScreen(),
   };
 }

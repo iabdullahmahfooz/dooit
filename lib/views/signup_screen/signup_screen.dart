@@ -3,12 +3,13 @@ import 'package:dooit/theme/colors.dart';
 import 'package:dooit/theme/typography.dart';
 import 'package:dooit/theme/units.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:dooit/widgets/custom_button.dart';
 import 'package:dooit/widgets/email_input_field.dart';
 import 'package:dooit/widgets/password_input_field.dart';
 import 'package:dooit/utils/back_navigation_wrapper.dart';
 import 'package:dooit/utils/validators_helper.dart';
+import 'package:dooit/widgets/labeled_text_field.dart';
+import 'package:flutter/services.dart'; 
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -52,22 +53,16 @@ class _SignupScreenState extends State<SignupScreen> {
                     Text('Create your account', style: AppText.h1),
                     AppUnits.y32,
 
-                    Text('Full Name', style: AppText.b2),
-                    AppUnits.y8,
-                    TextFormField(
+                    LabeledTextField(
+                      label: 'Full Name',
+                      hint: 'eg Abdullah Jatt',
                       controller: _fullNameController,
-                      decoration: InputDecoration(
-                        hintText: 'eg Abdullah Jatt',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        contentPadding: AppUnits.a12,
-                      ),
+                      validator: ValidatorsHelper.validateName,
+                      maxLines: 1,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z ]')),
                       ],
                       keyboardType: TextInputType.name,
-                      validator: ValidatorsHelper.validateName,
                     ),
                     AppUnits.y20,
 

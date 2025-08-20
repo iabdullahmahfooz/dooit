@@ -8,4 +8,7 @@ abstract class AppColors {
   //  Text & Neutral Colors
   static const Color textColor = Colors.black;
   static const Color greyColor = Colors.grey;
+
+  // fields fill color
+  static const Color fields = Colors.white;
 }

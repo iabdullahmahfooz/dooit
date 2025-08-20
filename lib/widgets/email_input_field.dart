@@ -5,7 +5,7 @@ import 'package:dooit/utils/validators_helper.dart';
 
 class EmailInputField extends StatelessWidget {
   final TextEditingController? controller;
-  final String? label;
+  final String label;
   final String? hint;
   final String? Function(String?)? validator;
   final Function(String)? onChanged;
@@ -13,7 +13,7 @@ class EmailInputField extends StatelessWidget {
   const EmailInputField({
     super.key,
     this.controller,
-    this.label,
+    this.label = "Email", // default label
     this.hint,
     this.validator,
     this.onChanged,
@@ -24,16 +24,11 @@ class EmailInputField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Email",
-          style: TextStyle(fontSize: 16, color: AppColors.textColor),
-        ),
-        const SizedBox(height: 6),
-
-        if (label != null)
-          Text(label!, style: AppText.b2.copyWith(color: AppColors.textColor)),
+        // Label
+        Text(label, style: AppText.b2.copyWith(color: AppColors.textColor)),
         const SizedBox(height: 8),
 
+        // Input field
         TextFormField(
           controller: controller,
           keyboardType: TextInputType.emailAddress,
@@ -41,7 +36,27 @@ class EmailInputField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hint ?? 'eg: abdullah@gmail.com',
             hintStyle: AppText.b1.copyWith(color: Colors.black45),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            filled: true,
+            fillColor: AppColors.fields,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(
+                color: AppColors.scaffoldBackgroundColor,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(
+                color: AppColors.scaffoldBackgroundColor,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(
+                color: AppColors.primaryColor,
+                width: 1.5,
+              ),
+            ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 12,
               vertical: 16,
