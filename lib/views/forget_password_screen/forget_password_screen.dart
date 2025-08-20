@@ -7,7 +7,7 @@ import 'package:dooit/routes/routes.dart';
 import '../../widgets/email_input_field.dart';
 import '../../widgets/custom_button.dart';
 import '../../utils/validators_helper.dart';
-import '../../utils/snackbar_helper.dart'; // Assuming this is where showSmallSnackBar is located
+import '../../utils/snackbar_helper.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:dooit/theme/colors.dart';
 import 'package:dooit/theme/typography.dart';
-import 'package:dooit/utils/validators_helper.dart'; // ✅ import
+import 'package:dooit/utils/validators_helper.dart';
 
 class PasswordInputField extends StatefulWidget {
   final TextEditingController? controller;
   final String? label;
   final String? hint;
-  final String? Function(String?)? validator; // ✅ external validator
+  final String? Function(String?)? validator;
   final Function(String)? onChanged;
   final bool obscureText;
 
@@ -26,7 +26,7 @@ class PasswordInputField extends StatefulWidget {
 }
 
 class _PasswordInputFieldState extends State<PasswordInputField> {
-  late bool _obscureText; // ✅ local toggle state
+  late bool _obscureText;
 
   @override
   void initState() {
@@ -48,9 +48,7 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
         TextFormField(
           controller: widget.controller,
           obscureText: _obscureText,
-          validator:
-              widget.validator ??
-              ValidatorsHelper.validatePassword, // ✅ default validator
+          validator: widget.validator ?? ValidatorsHelper.validatePassword,
           decoration: InputDecoration(
             hintText: widget.hint ?? 'Enter your password',
             hintStyle: AppText.b1.copyWith(color: Colors.black45),

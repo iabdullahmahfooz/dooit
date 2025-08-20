@@ -7,7 +7,7 @@ import 'package:dooit/routes/routes.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/password_input_field.dart';
 import '../../utils/validators_helper.dart';
-import '../../utils/snackbar_helper.dart'; // Assuming this is where showSmallSnackBar is located
+import '../../utils/snackbar_helper.dart';
 
 class NewPasswordScreen extends StatefulWidget {
   const NewPasswordScreen({super.key});
@@ -32,7 +32,6 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
       );
       Navigator.pushReplacementNamed(context, AppRoutes.login);
     } else {
-      // Determine specific error message
       String errorMessage = "Please fix the errors in the form";
       final newPasswordError = ValidatorsHelper.validatePassword(
         _newPasswordController.text,

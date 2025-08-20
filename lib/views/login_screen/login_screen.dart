@@ -6,11 +6,11 @@ import 'package:dooit/theme/units.dart';
 import 'package:dooit/utils/static_assets.dart';
 import 'package:dooit/utils/back_navigation_wrapper.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/email_input_field.dart';
-import '../../widgets/password_input_field.dart';
-import '../../utils/snackbar_helper.dart';
-import '../../utils/validators_helper.dart';
+import 'package:dooit/widgets/custom_button.dart';
+import 'package:dooit/widgets/email_input_field.dart';
+import 'package:dooit/widgets/password_input_field.dart';
+import 'package:dooit/utils/snackbar_helper.dart';
+import 'package:dooit/utils/validators_helper.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,13 +22,11 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  // ✅ Controllers
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   DateTime? _lastBackPressTime;
 
-  // ✅ Dispose controllers to free memory
   @override
   void dispose() {
     _emailController.dispose();
@@ -37,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onPopInvokedWithResult(bool didPop, Object? result) {
-    if (didPop) return; // If pop was allowed, do nothing
+    if (didPop) return;
 
     final now = DateTime.now();
     if (_lastBackPressTime == null ||
@@ -51,14 +49,12 @@ class _LoginScreenState extends State<LoginScreen> {
         contentType: ContentType.warning,
       );
     } else {
-      // Allow pop to exit the app
       Navigator.of(context).pop(true);
     }
   }
 
   void _login() {
     if (_formKey.currentState!.validate()) {
-      // ✅ Navigate only if valid
       Navigator.pushNamedAndRemoveUntil(
         context,
         AppRoutes.home,
@@ -77,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false, // Prevent default pop behavior
+      canPop: false,
       onPopInvokedWithResult: _onPopInvokedWithResult,
       child: BackNavigationWrapper(
         child: GestureDetector(
@@ -96,7 +92,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text('Login to your account', style: AppText.h1),
                       AppUnits.y40,
 
-                      // ✅ Email Field with Validator
                       EmailInputField(
                         controller: _emailController,
                         validator: ValidatorsHelper.validateEmail,
@@ -106,7 +101,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text('Password', style: AppText.b2),
                       AppUnits.y8,
 
-                      // ✅ Password Field with Validator
                       PasswordInputField(
                         controller: _passwordController,
                         validator: ValidatorsHelper.validatePassword,

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:dooit/theme/colors.dart';
 import 'package:dooit/theme/typography.dart';
-import 'package:dooit/utils/validators_helper.dart'; // ✅ import
+import 'package:dooit/utils/validators_helper.dart';
 
 class EmailInputField extends StatelessWidget {
   final TextEditingController? controller;
   final String? label;
   final String? hint;
-  final String? Function(String?)? validator; // ✅ support external validator
+  final String? Function(String?)? validator;
   final Function(String)? onChanged;
 
   const EmailInputField({
@@ -24,7 +24,6 @@ class EmailInputField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // ✅ Added static text "Email"
         const Text(
           "Email",
           style: TextStyle(fontSize: 16, color: AppColors.textColor),
@@ -38,9 +37,7 @@ class EmailInputField extends StatelessWidget {
         TextFormField(
           controller: controller,
           keyboardType: TextInputType.emailAddress,
-          validator:
-              validator ??
-              ValidatorsHelper.validateEmail, // ✅ default validator
+          validator: validator ?? ValidatorsHelper.validateEmail,
           decoration: InputDecoration(
             hintText: hint ?? 'eg: abdullah@gmail.com',
             hintStyle: AppText.b1.copyWith(color: Colors.black45),

@@ -4,9 +4,9 @@ import 'package:dooit/theme/typography.dart';
 import 'package:dooit/theme/units.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/email_input_field.dart';
-import '../../widgets/password_input_field.dart';
+import 'package:dooit/widgets/custom_button.dart';
+import 'package:dooit/widgets/email_input_field.dart';
+import 'package:dooit/widgets/password_input_field.dart';
 import 'package:dooit/utils/back_navigation_wrapper.dart';
 import 'package:dooit/utils/validators_helper.dart';
 
@@ -20,12 +20,10 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  // ✅ Controllers
   final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  // ✅ Dispose controllers when widget is destroyed to free memory
   @override
   void dispose() {
     _fullNameController.dispose();
@@ -54,7 +52,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     Text('Create your account', style: AppText.h1),
                     AppUnits.y32,
 
-                    // Full Name
                     Text('Full Name', style: AppText.b2),
                     AppUnits.y8,
                     TextFormField(
@@ -74,14 +71,12 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     AppUnits.y20,
 
-                    // Email
                     EmailInputField(
                       controller: _emailController,
                       validator: ValidatorsHelper.validateEmail,
                     ),
                     AppUnits.y20,
 
-                    // Password
                     Text(
                       'Password',
                       style: AppText.b2.copyWith(color: AppColors.textColor),
@@ -93,7 +88,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     AppUnits.y32,
 
-                    // Sign Up Button
                     CustomButton(
                       label: 'Sign Up',
                       onTap: () {
@@ -108,7 +102,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     AppUnits.y48,
 
-                    // Social Logins
                     Center(
                       child: Text(
                         'OR SIGN UP WITH:',
@@ -129,7 +122,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     AppUnits.y40,
 
-                    // Already have an account?
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

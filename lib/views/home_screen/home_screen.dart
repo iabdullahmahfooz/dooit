@@ -66,7 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<bool> onWillPop() async {
+  void _onPopInvokedWithResult(bool didPop, Object? result) {
+    if (didPop) return; // If pop was allowed, do nothing
+
     final now = DateTime.now();
     if (lastBackPressed == null ||
         now.difference(lastBackPressed!) > const Duration(seconds: 2)) {
@@ -77,10 +79,10 @@ class _HomeScreenState extends State<HomeScreen> {
         'Press back again to exit',
         ContentType.warning,
       );
-
-      return false;
+    } else {
+      // Allow pop to exit the app
+      Navigator.of(context).pop(true);
     }
-    return true;
   }
 
   Widget _buildTaskList() {
@@ -91,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return TaskCard(
           task: tasks[index],
           onEdit: () => editTask(index),
-          onToggleComplete: () => toggleComplete(index),
+          onComplete: () => toggleComplete(index),
         );
       },
     );
@@ -99,8 +101,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: onWillPop,
+    return PopScope(
+      canPop: false, // Prevent default pop behavior
+      onPopInvokedWithResult: _onPopInvokedWithResult,
       child: Scaffold(
         backgroundColor: AppColors.scaffoldBackgroundColor,
         body: SafeArea(
@@ -112,10 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: CustomBottomNavBar(
-          currentIndex: currentIndex,
-          onTap: (index) => setState(() => currentIndex = index),
-        ),
+        bottomNavigationBar: CustomBottomNavBar(currentIndex: 0),
       ),
     );
   }

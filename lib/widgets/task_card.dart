@@ -8,18 +8,17 @@ import 'package:intl/intl.dart';
 class TaskCard extends StatelessWidget {
   final Task task;
   final VoidCallback onEdit;
-  final VoidCallback onToggleComplete;
+  final VoidCallback onComplete;
 
   const TaskCard({
     super.key,
     required this.task,
     required this.onEdit,
-    required this.onToggleComplete,
+    required this.onComplete,
   });
 
   @override
   Widget build(BuildContext context) {
-    // Format the DateTime into something user-friendly
     final formattedDate = DateFormat(
       'hh:mm a • dd MMM, yyyy',
     ).format(task.createdAt);
@@ -33,7 +32,6 @@ class TaskCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title + Edit button
             Row(
               children: [
                 Expanded(
@@ -51,20 +49,18 @@ class TaskCard extends StatelessWidget {
             ),
             AppUnits.y8,
 
-            // Description
             Text(
               task.description,
               style: AppText.b2.copyWith(color: AppColors.greyColor),
             ),
             AppUnits.y12,
 
-            // Date + Completion Toggle
             Row(
               children: [
                 Text(formattedDate, style: AppText.b3),
                 const Spacer(),
                 GestureDetector(
-                  onTap: onToggleComplete,
+                  onTap: onComplete,
                   child: Row(
                     children: [
                       Text(
