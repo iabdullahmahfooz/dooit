@@ -8,20 +8,37 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:dooit/widgets/custom_button.dart';
 import 'package:dooit/widgets/labeled_text_field.dart';
 import 'package:dooit/widgets/deadline_picker_field.dart';
+import 'package:dooit/controllers/task_controller.dart';
+import 'package:dooit/models/task.dart';
 
-class AddTaskScreen extends StatefulWidget {
-  const AddTaskScreen({super.key});
+class TaskFormScreen extends StatefulWidget {
+  final Task? task; // null → Add, not null → Edit
+
+  const TaskFormScreen({super.key, this.task});
 
   @override
-  State<AddTaskScreen> createState() => _AddTaskScreenState();
+  State<TaskFormScreen> createState() => _TaskFormScreenState();
 }
 
-class _AddTaskScreenState extends State<AddTaskScreen> {
+class _TaskFormScreenState extends State<TaskFormScreen> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   DateTime? _deadline;
   DateTime? _lastBackPressTime;
+
+  final TaskController taskController = TaskController();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.task != null) {
+      // Prefill values in Edit mode
+      _titleController.text = widget.task!.title;
+      _descriptionController.text = widget.task!.description;
+      _deadline = widget.task!.deadline;
+    }
+  }
 
   @override
   void dispose() {
@@ -43,7 +60,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         contentType: ContentType.warning,
       );
     } else {
-      Navigator.of(context).pop(true);
+      Navigator.of(context).pop();
     }
   }
 
@@ -82,25 +99,57 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   }
 
   void _submit() {
-    if (!_formKey.currentState!.validate()) {
+    if (!_formKey.currentState!.validate() || _deadline == null) {
       showSmallSnackBar(
         context,
         "Invalid Input",
-        "Please fill in all fields correctly",
+        _deadline == null
+            ? "Please select a deadline"
+            : "Please fill in all fields correctly",
         contentType: ContentType.failure,
       );
       return;
     }
-    showSmallSnackBar(
-      context,
-      "Almost there",
-      "We’ll hook this up to storage next",
-      contentType: ContentType.help,
-    );
+
+    final title = _titleController.text.trim();
+    final description = _descriptionController.text.trim();
+
+    if (widget.task == null) {
+      // ADD
+      taskController.addTask(title, description, _deadline!);
+      showSmallSnackBar(
+        context,
+        "Task Added!",
+        "‘$title’ has been created successfully 🎉",
+        contentType: ContentType.success,
+      );
+    } else {
+      // EDIT — ✅ use positional args
+      taskController.editTask(
+        widget.task!.id,
+        title,
+        description,
+        _deadline!,
+        widget.task!.isCompleted,
+      );
+      showSmallSnackBar(
+        context,
+        "Task Updated!",
+        "‘$title’ has been updated ✅",
+        contentType: ContentType.success,
+      );
+    }
+
+    // Navigate back after short delay
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (mounted) Navigator.pop(context, true);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final isEdit = widget.task != null;
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: _onPopInvokedWithResult,
@@ -111,7 +160,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             appBar: AppBar(
               elevation: 0,
               backgroundColor: Colors.white,
-              title: Text("Add task", style: AppText.h2),
+              title: Text(isEdit ? "Edit task" : "Add task", style: AppText.h2),
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.black),
                 onPressed: () => Navigator.pop(context),
@@ -151,7 +200,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         onTap: _pickDeadline,
                       ),
                       AppUnits.y40,
-                      CustomButton(label: "Add task", onTap: _submit),
+                      CustomButton(
+                        label: isEdit ? "Save changes" : "Add task",
+                        onTap: _submit,
+                      ),
                       AppUnits.y20,
                     ],
                   ),

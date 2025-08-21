@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:dooit/views/home_screen/home_screen.dart';
 import 'package:dooit/views/task_screen/task_screen.dart';
 
-
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
 
@@ -22,7 +21,7 @@ class CustomBottomNavBar extends StatelessWidget {
       case 1: // Add Task
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => const AddTaskScreen()),
+          MaterialPageRoute(builder: (_) => const TaskFormScreen()),
         );
         break;
       case 2: // Task

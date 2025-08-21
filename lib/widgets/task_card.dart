@@ -1,3 +1,4 @@
+import 'package:dooit/views/add_task_screen/add_task_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dooit/theme/colors.dart';
 import 'package:dooit/theme/typography.dart';
@@ -7,21 +8,29 @@ import 'package:intl/intl.dart';
 
 class TaskCard extends StatelessWidget {
   final Task task;
-  final VoidCallback onEdit;
   final VoidCallback onComplete;
 
-  const TaskCard({
-    super.key,
-    required this.task,
-    required this.onEdit,
-    required this.onComplete,
-  });
+  const TaskCard({super.key, required this.task, required this.onComplete});
+
+  void _editTask(BuildContext context) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => TaskFormScreen(task: task), // ✅ pass task for editing
+      ),
+    );
+
+    if (result == true) {
+      // ✅ Optionally refresh UI after editing
+      // (your HomeScreen should already reload tasks in setState after pop)
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final formattedDate = DateFormat(
+    final formattedDeadline = DateFormat(
       'hh:mm a • dd MMM, yyyy',
-    ).format(task.createdAt);
+    ).format(task.createdAt); // ✅ show deadline instead of createdAt
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -43,7 +52,7 @@ class TaskCard extends StatelessWidget {
                 ),
                 IconButton(
                   icon: const Icon(Icons.edit, size: 20),
-                  onPressed: onEdit,
+                  onPressed: () => _editTask(context), // ✅ open edit form
                 ),
               ],
             ),
@@ -57,7 +66,7 @@ class TaskCard extends StatelessWidget {
 
             Row(
               children: [
-                Text(formattedDate, style: AppText.b3),
+                Text(formattedDeadline, style: AppText.b3),
                 const Spacer(),
                 GestureDetector(
                   onTap: onComplete,

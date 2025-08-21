@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:dooit/theme/colors.dart';
 import 'package:dooit/theme/typography.dart';
-import 'package:dooit/mocks/mock_tasks.dart';
 import 'package:dooit/widgets/task_card.dart';
 import 'package:dooit/models/task.dart';
 import 'package:dooit/widgets/custom_bottom_navbar.dart';
 import 'package:dooit/theme/units.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:dooit/controllers/task_controller.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
@@ -16,6 +16,7 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
+  final TaskController taskController = TaskController();
   DateTime? lastBackPressed;
 
   void showSmallSnackBar(String title, String message, ContentType type) {
@@ -40,6 +41,20 @@ class _TaskScreenState extends State<TaskScreen> {
       ..showSnackBar(snackBar);
   }
 
+  void toggleComplete(Task task) {
+    setState(() {
+      task.isCompleted = !task.isCompleted;
+
+      showSmallSnackBar(
+        task.isCompleted ? "Completed!" : "Pending Again!",
+        task.isCompleted
+            ? "${task.title} marked as completed 🎉"
+            : "${task.title} marked as pending",
+        task.isCompleted ? ContentType.success : ContentType.warning,
+      );
+    });
+  }
+
   void _onPopInvokedWithResult(bool didPop, Object? result) {
     if (didPop) return;
 
@@ -60,13 +75,12 @@ class _TaskScreenState extends State<TaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Task> tasks = mockTasks;
-
-    final List<Task> pendingTasks = tasks
-        .where((task) => task.isCompleted == false)
+    final List<Task> allTasks = taskController.tasks;
+    final List<Task> pendingTasks = allTasks
+        .where((task) => !task.isCompleted)
         .toList();
-    final List<Task> completedTasks = tasks
-        .where((task) => task.isCompleted == true)
+    final List<Task> completedTasks = allTasks
+        .where((task) => task.isCompleted)
         .toList();
 
     return PopScope(
@@ -99,7 +113,7 @@ class _TaskScreenState extends State<TaskScreen> {
               Expanded(
                 child: TabBarView(
                   children: [
-                    _buildTaskList(tasks),
+                    _buildTaskList(allTasks),
                     _buildTaskList(pendingTasks),
                     _buildTaskList(completedTasks),
                   ],
@@ -123,15 +137,7 @@ class _TaskScreenState extends State<TaskScreen> {
         itemCount: tasks.length,
         itemBuilder: (context, index) {
           final task = tasks[index];
-          return TaskCard(
-            task: task,
-            onEdit: () {
-              debugPrint("Edit tapped for ${task.title}");
-            },
-            onComplete: () {
-              debugPrint("Completed tapped for ${task.title}");
-            },
-          );
+          return TaskCard(task: task, onComplete: () => toggleComplete(task));
         },
       ),
     );

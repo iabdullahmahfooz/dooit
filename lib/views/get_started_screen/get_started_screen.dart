@@ -2,6 +2,7 @@ import 'package:dooit/routes/routes.dart';
 import 'package:dooit/theme/units.dart';
 import 'package:dooit/theme/colors.dart';
 import 'package:dooit/theme/typography.dart';
+import 'package:dooit/utils/static_assets.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/custom_button.dart';
 import 'package:dooit/utils/back_navigation_wrapper.dart';
@@ -37,10 +38,7 @@ class GetStartedScreen extends StatelessWidget {
 
               Expanded(
                 child: Center(
-                  child: Image.asset(
-                    'assets/illustrations/get_started.jpg',
-                    height: 350,
-                  ),
+                  child: Image.asset(StaticAssets.getStarted, height: 350),
                 ),
               ),
 

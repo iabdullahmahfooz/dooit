@@ -7,6 +7,7 @@ List<Task> mockTasks = [
     description: "Carry out a yoga session",
     createdAt: DateTime(2025, 2, 19, 7, 0),
     isCompleted: false,
+    updatedAt: DateTime.now(),
   ),
   Task(
     id: 2,
@@ -14,6 +15,7 @@ List<Task> mockTasks = [
     description: "Review pull requests for the authentication module.",
     createdAt: DateTime(2025, 2, 19, 9, 30),
     isCompleted: false,
+    updatedAt: DateTime.now(),
   ),
   Task(
     id: 3,
@@ -21,6 +23,7 @@ List<Task> mockTasks = [
     description: "Send weekly progress report to the manager.",
     createdAt: DateTime(2025, 2, 19, 11, 0),
     isCompleted: true,
+    updatedAt: DateTime.now(),
   ),
   Task(
     id: 4,
@@ -28,6 +31,7 @@ List<Task> mockTasks = [
     description: "Attend daily stand-up meeting with the development team.",
     createdAt: DateTime(2025, 2, 19, 12, 30),
     isCompleted: false,
+    updatedAt: DateTime.now(),
   ),
   Task(
     id: 5,
@@ -35,6 +39,7 @@ List<Task> mockTasks = [
     description: "Buy groceries: milk, eggs, and bread.",
     createdAt: DateTime(2025, 2, 19, 15, 0),
     isCompleted: false,
+    updatedAt: DateTime.now(),
   ),
   Task(
     id: 6,
@@ -42,6 +47,7 @@ List<Task> mockTasks = [
     description: "Have a quick catch-up call with mom.",
     createdAt: DateTime(2025, 2, 19, 16, 30),
     isCompleted: false,
+    updatedAt: DateTime.now(),
   ),
   Task(
     id: 7,
@@ -49,6 +55,7 @@ List<Task> mockTasks = [
     description: "Complete Flutter state management tutorial.",
     createdAt: DateTime(2025, 2, 19, 18, 0),
     isCompleted: false,
+    updatedAt: DateTime.now(),
   ),
   Task(
     id: 8,
@@ -56,6 +63,7 @@ List<Task> mockTasks = [
     description: "Dinner reservation at Italian restaurant.",
     createdAt: DateTime(2025, 2, 19, 20, 0),
     isCompleted: false,
+    updatedAt: DateTime.now(),
   ),
   Task(
     id: 9,
@@ -63,6 +71,7 @@ List<Task> mockTasks = [
     description: "Read at least 20 pages of 'Atomic Habits'.",
     createdAt: DateTime(2025, 2, 19, 21, 30),
     isCompleted: true,
+    updatedAt: DateTime.now(),
   ),
   Task(
     id: 10,
@@ -70,5 +79,6 @@ List<Task> mockTasks = [
     description: "Write down tasks and goals for tomorrow.",
     createdAt: DateTime(2025, 2, 19, 22, 0),
     isCompleted: false,
+    updatedAt: DateTime.now(),
   ),
 ];

@@ -5,7 +5,7 @@ import 'package:dooit/theme/units.dart';
 import 'package:dooit/widgets/task_card.dart';
 import 'package:dooit/widgets/custom_appbar.dart';
 import 'package:dooit/widgets/custom_bottom_navbar.dart';
-import 'package:dooit/models/task.dart';
+import 'package:dooit/controllers/task_controller.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,10 +16,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Task> tasks = List.from(mockTasks);
+  final TaskController taskController = TaskController();
 
   DateTime? lastBackPressed;
-  int currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // ✅ load initial mock tasks into controller if it's empty
+    if (taskController.tasks.isEmpty) {
+      taskController.tasks.addAll(mockTasks);
+    }
+  }
 
   void showSmallSnackBar(String title, String message, ContentType type) {
     final snackBar = SnackBar(
@@ -27,7 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-
       content: Transform.scale(
         scale: 0.85,
         child: AwesomeSnackbarContent(
@@ -46,28 +53,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void toggleComplete(int index) {
     setState(() {
-      tasks[index].isCompleted = !tasks[index].isCompleted;
+      taskController.tasks[index].isCompleted =
+          !taskController.tasks[index].isCompleted;
 
       showSmallSnackBar(
-        tasks[index].isCompleted ? 'Completed!' : 'Pending Again!',
-        tasks[index].isCompleted
-            ? '${tasks[index].title} marked as completed 🎉'
-            : '${tasks[index].title} marked as pending',
-        tasks[index].isCompleted ? ContentType.success : ContentType.warning,
+        taskController.tasks[index].isCompleted
+            ? 'Completed!'
+            : 'Pending Again!',
+        taskController.tasks[index].isCompleted
+            ? '${taskController.tasks[index].title} marked as completed 🎉'
+            : '${taskController.tasks[index].title} marked as pending',
+        taskController.tasks[index].isCompleted
+            ? ContentType.success
+            : ContentType.warning,
       );
     });
   }
 
-  void editTask(int index) {
-    showSmallSnackBar(
-      'Edit Task',
-      'Editing ${tasks[index].title}',
-      ContentType.help,
-    );
-  }
-
   void _onPopInvokedWithResult(bool didPop, Object? result) {
-    if (didPop) return; // If pop was allowed, do nothing
+    if (didPop) return;
 
     final now = DateTime.now();
     if (lastBackPressed == null ||
@@ -80,7 +84,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ContentType.warning,
       );
     } else {
-      // Allow pop to exit the app
       Navigator.of(context).pop(true);
     }
   }
@@ -88,11 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildTaskList() {
     return ListView.builder(
       padding: AppUnits.a16,
-      itemCount: tasks.length,
+      itemCount: taskController.tasks.length,
       itemBuilder: (context, index) {
         return TaskCard(
-          task: tasks[index],
-          onEdit: () => editTask(index),
+          task: taskController.tasks[index],
           onComplete: () => toggleComplete(index),
         );
       },
@@ -102,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false, // Prevent default pop behavior
+      canPop: false,
       onPopInvokedWithResult: _onPopInvokedWithResult,
       child: Scaffold(
         backgroundColor: AppColors.scaffoldBackgroundColor,
@@ -115,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: CustomBottomNavBar(currentIndex: 0),
+        bottomNavigationBar: const CustomBottomNavBar(currentIndex: 0),
       ),
     );
   }

@@ -27,6 +27,6 @@ class AppRoutes {
     newPassword: (context) => const NewPasswordScreen(),
     home: (context) => const HomeScreen(),
     task: (context) => const TaskScreen(),
-    addTask: (context) => const AddTaskScreen(),
+    addTask: (context) => const TaskFormScreen(),
   };
 }
