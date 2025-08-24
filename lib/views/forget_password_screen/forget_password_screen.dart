@@ -28,7 +28,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         "Password reset instructions sent to your email",
         contentType: ContentType.success,
       );
-      Navigator.popAndPushNamed(context, AppRoutes.newPassword);
+      Navigator.popAndPushNamed(context, AppRoutes.verifyEmail);
     } else {
       String errorMessage =
           ValidatorsHelper.validateEmail(_emailController.text) ??

@@ -3,12 +3,12 @@ import 'package:dooit/theme/colors.dart';
 import 'package:dooit/theme/typography.dart';
 import 'package:dooit/models/task.dart';
 
-class UndoButton extends StatelessWidget {
+class UndoSnackbar extends StatelessWidget {
   final Task task;
   final VoidCallback onDelete;
   final VoidCallback onUndo;
 
-  const UndoButton({
+  const UndoSnackbar({
     super.key,
     required this.task,
     required this.onDelete,

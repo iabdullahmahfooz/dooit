@@ -8,7 +8,7 @@ import 'package:dooit/theme/units.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:dooit/controllers/task_controller.dart';
 import 'package:dooit/utils/snackbar_helper.dart';
-import 'package:dooit/widgets/undo_button.dart';
+import 'package:dooit/widgets/undo_snackbar.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
@@ -133,7 +133,7 @@ class _TaskScreenState extends State<TaskScreen> {
             ),
 
             onDismissed: (_) {
-              UndoButton(
+              UndoSnackbar(
                 task: task,
                 onDelete: () {
                   setState(() {
