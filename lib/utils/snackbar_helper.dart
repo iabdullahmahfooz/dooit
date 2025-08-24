@@ -12,16 +12,15 @@ void showSmallSnackBar(
     behavior: SnackBarBehavior.floating,
     backgroundColor: Colors.transparent,
     margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-
+    duration: const Duration(seconds: 3),
     content: Transform.scale(
-      scale: 0.85,
+      scale: 0.9,
       child: AwesomeSnackbarContent(
         title: title,
         message: message,
         contentType: contentType,
       ),
     ),
-    duration: const Duration(seconds: 2),
   );
 
   ScaffoldMessenger.of(context)

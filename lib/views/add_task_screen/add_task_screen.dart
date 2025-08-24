@@ -12,7 +12,7 @@ import 'package:dooit/controllers/task_controller.dart';
 import 'package:dooit/models/task.dart';
 
 class TaskFormScreen extends StatefulWidget {
-  final Task? task; // null → Add, not null → Edit
+  final Task? task;
 
   const TaskFormScreen({super.key, this.task});
 
@@ -33,7 +33,6 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
   void initState() {
     super.initState();
     if (widget.task != null) {
-      // Prefill values in Edit mode
       _titleController.text = widget.task!.title;
       _descriptionController.text = widget.task!.description;
       _deadline = widget.task!.deadline;
@@ -115,7 +114,6 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
     final description = _descriptionController.text.trim();
 
     if (widget.task == null) {
-      // ADD
       taskController.addTask(title, description, _deadline!);
       showSmallSnackBar(
         context,
@@ -124,7 +122,6 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
         contentType: ContentType.success,
       );
     } else {
-      // EDIT — ✅ use positional args
       taskController.editTask(
         widget.task!.id,
         title,
@@ -140,7 +137,6 @@ class _TaskFormScreenState extends State<TaskFormScreen> {
       );
     }
 
-    // Navigate back after short delay
     Future.delayed(const Duration(milliseconds: 500), () {
       if (mounted) Navigator.pop(context, true);
     });

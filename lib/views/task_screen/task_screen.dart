@@ -7,6 +7,8 @@ import 'package:dooit/widgets/custom_bottom_navbar.dart';
 import 'package:dooit/theme/units.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:dooit/controllers/task_controller.dart';
+import 'package:dooit/utils/snackbar_helper.dart';
+import 'package:dooit/widgets/undo_button.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
@@ -19,73 +21,56 @@ class _TaskScreenState extends State<TaskScreen> {
   final TaskController taskController = TaskController();
   DateTime? lastBackPressed;
 
-  void showSmallSnackBar(String title, String message, ContentType type) {
-    final snackBar = SnackBar(
-      elevation: 0,
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      content: Transform.scale(
-        scale: 0.85,
-        child: AwesomeSnackbarContent(
-          title: title,
-          message: message,
-          contentType: type,
-        ),
-      ),
-      duration: const Duration(seconds: 2),
-    );
-
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(snackBar);
-  }
-
   void toggleComplete(Task task) {
     setState(() {
-      task.isCompleted = !task.isCompleted;
+      taskController.toggleTaskStatus(task.id);
+      final updatedTask = taskController.tasks.firstWhere(
+        (t) => t.id == task.id,
+      );
 
       showSmallSnackBar(
-        task.isCompleted ? "Completed!" : "Pending Again!",
-        task.isCompleted
-            ? "${task.title} marked as completed 🎉"
-            : "${task.title} marked as pending",
-        task.isCompleted ? ContentType.success : ContentType.warning,
+        context,
+        updatedTask.isCompleted ? "Completed!" : "Pending Again!",
+        updatedTask.isCompleted
+            ? "${updatedTask.title} marked as completed 🎉"
+            : "${updatedTask.title} marked as pending",
+        contentType: updatedTask.isCompleted
+            ? ContentType.success
+            : ContentType.warning,
       );
     });
-  }
-
-  void _onPopInvokedWithResult(bool didPop, Object? result) {
-    if (didPop) return;
-
-    final now = DateTime.now();
-    if (lastBackPressed == null ||
-        now.difference(lastBackPressed!) > const Duration(seconds: 2)) {
-      lastBackPressed = now;
-
-      showSmallSnackBar(
-        'Hold on!',
-        'Press back again to exit',
-        ContentType.warning,
-      );
-    } else {
-      Navigator.of(context).pop(true);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     final List<Task> allTasks = taskController.tasks;
     final List<Task> pendingTasks = allTasks
-        .where((task) => !task.isCompleted)
+        .where((t) => !t.isCompleted)
         .toList();
     final List<Task> completedTasks = allTasks
-        .where((task) => task.isCompleted)
+        .where((t) => t.isCompleted)
         .toList();
 
     return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: _onPopInvokedWithResult,
+      canPop: true,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+
+        final now = DateTime.now();
+        if (lastBackPressed == null ||
+            now.difference(lastBackPressed!) > const Duration(seconds: 2)) {
+          lastBackPressed = now;
+
+          showSmallSnackBar(
+            context,
+            'Hold on!',
+            'Press back again to exit',
+            contentType: ContentType.warning,
+          );
+        } else {
+          Navigator.of(context).maybePop();
+        }
+      },
       child: DefaultTabController(
         length: 3,
         child: Scaffold(
@@ -137,7 +122,33 @@ class _TaskScreenState extends State<TaskScreen> {
         itemCount: tasks.length,
         itemBuilder: (context, index) {
           final task = tasks[index];
-          return TaskCard(task: task, onComplete: () => toggleComplete(task));
+          return Dismissible(
+            key: Key(task.id.toString()),
+            direction: DismissDirection.startToEnd,
+            background: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              alignment: Alignment.centerLeft,
+              color: Colors.red,
+              child: const Icon(Icons.delete, color: Colors.white),
+            ),
+
+            onDismissed: (_) {
+              UndoButton(
+                task: task,
+                onDelete: () {
+                  setState(() {
+                    taskController.deleteTask(task.id);
+                  });
+                },
+                onUndo: () {
+                  setState(() {
+                    taskController.restoreTask(task, index);
+                  });
+                },
+              ).show(context);
+            },
+            child: TaskCard(task: task, onComplete: () => toggleComplete(task)),
+          );
         },
       ),
     );

@@ -17,13 +17,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TaskController taskController = TaskController();
-
   DateTime? lastBackPressed;
 
   @override
   void initState() {
     super.initState();
-    // ✅ load initial mock tasks into controller if it's empty
+
     if (taskController.tasks.isEmpty) {
       taskController.tasks.addAll(mockTasks);
     }
@@ -53,19 +52,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void toggleComplete(int index) {
     setState(() {
-      taskController.tasks[index].isCompleted =
-          !taskController.tasks[index].isCompleted;
+      final task = taskController.tasks[index];
+
+      taskController.toggleTaskStatus(task.id);
+
+      final updatedTask = taskController.tasks[index];
 
       showSmallSnackBar(
-        taskController.tasks[index].isCompleted
-            ? 'Completed!'
-            : 'Pending Again!',
-        taskController.tasks[index].isCompleted
-            ? '${taskController.tasks[index].title} marked as completed 🎉'
-            : '${taskController.tasks[index].title} marked as pending',
-        taskController.tasks[index].isCompleted
-            ? ContentType.success
-            : ContentType.warning,
+        updatedTask.isCompleted ? 'Completed!' : 'Pending Again!',
+        updatedTask.isCompleted
+            ? '${updatedTask.title} marked as completed 🎉'
+            : '${updatedTask.title} marked as pending',
+        updatedTask.isCompleted ? ContentType.success : ContentType.warning,
       );
     });
   }

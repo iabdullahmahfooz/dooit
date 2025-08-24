@@ -13,7 +13,7 @@ class EmailInputField extends StatelessWidget {
   const EmailInputField({
     super.key,
     this.controller,
-    this.label = "Email", // default label
+    this.label = "Email",
     this.hint,
     this.validator,
     this.onChanged,
@@ -24,11 +24,9 @@ class EmailInputField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Label
         Text(label, style: AppText.b2.copyWith(color: AppColors.textColor)),
         const SizedBox(height: 8),
 
-        // Input field
         TextFormField(
           controller: controller,
           keyboardType: TextInputType.emailAddress,

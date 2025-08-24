@@ -12,16 +12,27 @@ class TaskController {
   List<Task> get tasks => _tasks;
 
   void addTask(String title, String description, DateTime deadline) {
+    final now = DateTime.now();
     final task = Task(
       id: _idCounter++,
       title: title,
       description: description,
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
+      createdAt: now,
+      updatedAt: now,
       deadline: deadline,
       isCompleted: false,
     );
     _tasks.add(task);
+  }
+
+  void restoreTask(Task task, int index) {
+    final restoredTask = task.copyWith(updatedAt: DateTime.now());
+
+    if (index >= 0 && index <= _tasks.length) {
+      _tasks.insert(index, restoredTask);
+    } else {
+      _tasks.add(restoredTask);
+    }
   }
 
   void editTask(
@@ -33,14 +44,12 @@ class TaskController {
   ) {
     final index = _tasks.indexWhere((task) => task.id == id);
     if (index != -1) {
-      _tasks[index] = Task(
-        id: id,
+      _tasks[index] = _tasks[index].copyWith(
         title: title,
         description: description,
-        createdAt: _tasks[index].createdAt,
-        updatedAt: DateTime.now(),
         deadline: deadline,
         isCompleted: isCompleted,
+        updatedAt: DateTime.now(),
       );
     }
   }
@@ -49,15 +58,14 @@ class TaskController {
     final index = _tasks.indexWhere((task) => task.id == id);
     if (index != -1) {
       final task = _tasks[index];
-      _tasks[index] = Task(
-        id: task.id,
-        title: task.title,
-        description: task.description,
-        createdAt: task.createdAt,
-        updatedAt: DateTime.now(),
-        deadline: task.deadline,
+      _tasks[index] = task.copyWith(
         isCompleted: !task.isCompleted,
+        updatedAt: DateTime.now(),
       );
     }
+  }
+
+  void deleteTask(int id) {
+    _tasks.removeWhere((task) => task.id == id);
   }
 }

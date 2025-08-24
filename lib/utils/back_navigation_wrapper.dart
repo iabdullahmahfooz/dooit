@@ -6,15 +6,6 @@ class BackNavigationWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        if (Navigator.canPop(context)) {
-          Navigator.pop(context);
-          return false;
-        }
-        return true; 
-      },
-      child: child,
-    );
+    return PopScope(canPop: Navigator.canPop(context), child: child);
   }
 }

@@ -35,7 +35,7 @@ class ValidatorsHelper {
     return null;
   }
 
-  /// Confirm password validator (returns a closure)
+  /// Confirm password validator 
   static FormFieldValidator<String> confirmPasswordValidator(
     TextEditingController passwordController,
   ) {

@@ -39,7 +39,6 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Show label only if provided
         if (widget.label != null) ...[
           Text(
             widget.label!,
@@ -48,7 +47,6 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
           const SizedBox(height: 8),
         ],
 
-        // Input field
         TextFormField(
           controller: widget.controller,
           obscureText: _obscureText,
